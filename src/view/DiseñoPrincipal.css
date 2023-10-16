@@ -1,0 +1,214 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2 oct. 2023, 20:01:31
+    Author     : Hector Baquedano
+*/
+
+.encabezado{
+    -fx-background-color:#fff;
+    -fx-border-color:#000;
+    -fx-border-width: .4px .4px .2px .4px;
+}
+
+.encabezado_inferior{
+    -fx-background-color:#efefef;
+    -fx-border-color:#000;
+    -fx-border-width: .2px .4px .4px .4px;
+}
+
+.btnSalir{
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+}
+
+.btnSalir:hover{
+    -fx-background-color: #fb3d63; 
+    -fx-opacity:0.8;
+}
+
+.btnMinimizar{
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+}
+
+.btnMinimizar:hover{
+    -fx-background-color: #ddd; 
+    -fx-opacity:0.8;
+}
+
+.menu{
+    -fx-background-color: linear-gradient(to right bottom, #247426, #25A728); 
+}
+
+.btn-Menu{
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14 px;
+    -fx-font-family:"Arial";
+    -fx-alignment:CENTER-LEFT;
+}
+
+.btnLog-out{
+    -fx-background-color:TRANSPARENT;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.btnLog-out:hover{
+    -fx-border-color:#fff;
+    -fx-border-radius: 10px;
+}
+
+.shadow{
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.4),6,0,0,0);
+}
+
+.fondo-blanco{
+    -fx-background-color: #FFF;
+    -fx-background-radius: 8px;
+}
+
+.tarjeta{
+    -fx-background-color: Linear-gradient(to right, #344250, #3c6382);
+    -fx-background-radius: 5px;
+}
+
+.buscar{
+    -fx-background-color: transparent;
+    -fx-border-color: linear-gradient(to right bottom, #247426, #25A728);
+    -fx-border-width: .8px;
+    -fx-border-radius: 8px;
+    -fx-font-family:"Tahoma";
+    -fx-font-size: 14px;
+    -fx-padding:0px 0px 0px 28px;
+}
+
+.buscar:focused{
+    -fx-border-width: 1.5px;
+}
+
+.vista-tabla{
+    -fx-background-color: transparent;
+    -fx-padding:0px;
+    -fx-border-color: Linear-gradient(to right, #344250, #3c6382);
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-header-background-color:linear-gradient(to right bottom, #247426, #25A728);
+}
+
+.vista-tabla .table-column{
+    -fx-alignment: CENTER;
+}
+
+.vista-tabla .column-header-background{
+    -fx-background-color: Linear-gradient(to right, #344250, #3c6382);
+    -fx-background-radius: 8px 8px 0px 0px;
+    -fx-background-inset: 0 0 0 0;
+}
+
+.vista-tabla .header-column, .filter{
+    -fx-background-color: transparent;
+    -fx-size: 40px; 
+}
+
+.vista-tabla .column-header .label{
+    -fx-text-fill:#fff;
+    -fx-font-family:"Arial";
+}
+
+.campoTexto{
+    -fx-background-color: linear-gradient(to bottom, #efefef, #eee);
+    -fx-background-radius: 4px;
+    -fx-border-color:linear-gradient(to right bottom, #247426, #25A728);
+    -fx-border-width:.8px;
+    -fx-border-radius:4px;
+    -fx-font-family:"Tahoma";
+    -fx-size:30px;
+}
+
+.campoTexto:focused{
+    -fx-background-color:#fff;
+    -fx-border-width:1.5px;
+}
+
+.btnAgregar{
+    -fx-background-color: #2d5278;
+    -fx-background-radius: 8px;
+    -fx-text-fill:#fff;
+    -fx-font-size: 14px;
+    -fx-font-family:"Arial";
+    -fx-cursor: hand;
+}
+
+.btnAgregar:hover{
+    -fx-background-color: #2268ae;
+}
+
+.btnModificar{
+    -fx-background-color: #2d7755;
+    -fx-background-radius: 8px;
+    -fx-text-fill:#fff;
+    -fx-font-size: 14px;
+    -fx-font-family:"Arial";
+    -fx-cursor: hand;
+}
+
+.btnModificar:hover{
+    -fx-background-color: #22ad72;
+}
+
+.btnEliminar{
+    -fx-background-color: #90242f;
+    -fx-background-radius: 8px;
+    -fx-text-fill:#fff;
+    -fx-font-size: 14px;
+    -fx-font-family:"Arial";
+    -fx-cursor: hand;
+}
+
+.btnEliminar:hover{
+    -fx-background-color: #c51f32;
+}
+
+.btnLimpiar{
+    -fx-background-color: #6e2275;
+    -fx-background-radius: 8px;
+    -fx-text-fill:#fff;
+    -fx-font-size: 14px;
+    -fx-font-family:"Arial";
+    -fx-cursor: hand;
+}
+
+.btnLimpiar:hover{
+    -fx-background-color: #ae21ac;
+}
+
+.btnLimpiar{
+    -fx-background-color: #6e2275;
+    -fx-background-radius: 8px;
+    -fx-text-fill:#fff;
+    -fx-font-size: 14px;
+    -fx-font-family:"Arial";
+    -fx-cursor: hand;
+}
+
+.btnLimpiar:hover{
+    -fx-background-color: #ae21ac;
+}
+
+.btnInforme{
+    -fx-background-color: #ad6f2b;
+    -fx-background-radius: 8px;
+    -fx-text-fill:#fff;
+    -fx-font-size: 14px;
+    -fx-font-family:"Arial";
+    -fx-cursor: hand;
+}
+
+.btnInforme:hover{
+    -fx-background-color: #dc984f;
+}

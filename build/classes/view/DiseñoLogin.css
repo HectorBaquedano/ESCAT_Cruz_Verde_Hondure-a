@@ -1,0 +1,56 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2 oct. 2023, 15:08:25
+    Author     : Hector Baquedano
+*/
+
+.lado-izquierdo{
+    -fx-background-color: linear-gradient(to right bottom, #247426, #25A728); 
+    -fx-border-color: #000;
+    -fx-border-width:.4px 0px .4px .4px;
+}
+
+.lado-derecho{
+    -fx-background-color:#ffffff;
+    -fx-border-color: #000;
+    -fx-border-width:.4px .4px .4px 0px;
+}
+
+.btnLogin{
+    -fx-background-color: linear-gradient(to right bottom, #247426, #25A728);
+    -fx-background-radius:5px;
+    -fx-cursor:hand;
+}
+.btnLogin:hover{
+    -fx-background-color: linear-gradient(to right bottom, #247426, #25A728); 
+    -fx-transition-delay: 100ms;
+    -fx-opacity:0.9;
+}
+
+.btnSalir{
+    -fx-background-color: transparent;
+    -fx-cursor:hand;
+}
+.btnSalir:hover{
+    -fx-background-color: #fb3d63; 
+    -fx-transition-delay: 100ms;
+    -fx-opacity:0.8;
+}
+.campoTexto{
+    -fx-background-color:linear-gradient(to bottom,#efefef,#eee);
+    -fx-background-radius:5px;
+    -fx-border-color:#000;
+    -fx-border-width:.2px;
+    -fx-border-radius:5px;
+    -fx-font-size: 13px;
+    -fx-font-family: "Tahoma"
+}
+.campoTexto:focused{
+    -fx-background-color:#fff;
+    -fx-border-color:linear-gradient(to right bottom, #247426, #25A728);
+    -fx-border-width:.8px;
+    
+}

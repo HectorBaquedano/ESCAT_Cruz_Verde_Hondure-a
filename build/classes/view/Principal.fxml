@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrincipalController">
+   <children>
+      <AnchorPane fx:id="formulario_principal" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane layoutX="53.0" layoutY="119.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <AnchorPane prefHeight="45.0" prefWidth="200.0" styleClass="encabezado_inferior" stylesheets="@DiseñoPrincipal.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="98.0" layoutY="-68.0" prefHeight="35.0" prefWidth="1100.0" styleClass="encabezado" stylesheets="@DiseñoPrincipal.css" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fitHeight="30.0" fitWidth="73.0" layoutX="10.4" layoutY="4.4" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.4" AnchorPane.topAnchor="4.4">
+                                 <image>
+                                    <Image url="@../img/Escudo%20ESCAT%20OFICIAL%202.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="92.0" layoutY="9.0" text="Escuela de Capacitación Técnica de la Cruz Verde Hondureña" textFill="#0f7139">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btn_salir" layoutX="1072.0" layoutY="3.4" mnemonicParsing="false" onAction="#salir" prefHeight="26.0" prefWidth="30.0" styleClass="btnSalir" stylesheets="@DiseñoPrincipal.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="CLOSE" size="1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnMinimizar" layoutX="1037.0" layoutY="3.4" mnemonicParsing="false" onAction="#minimizar" prefHeight="26.0" prefWidth="30.0" styleClass="btnMinimizar" stylesheets="@DiseñoPrincipal.css" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="3.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="MINUS" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <left>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutY="161.0" prefHeight="553.6" prefWidth="200.0" styleClass="menu" stylesheets="@DiseñoPrincipal.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fitHeight="100.0" fitWidth="103.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/Escudo%20Cruz%20Verde%20%20Hondureña_Oficial..png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="63.0" layoutY="121.0" text="Bienvenido" textFill="#fff8f8">
+                                 <font>
+                                    <Font name="Tahoma" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="etiqueta_usuario" alignment="CENTER" layoutX="9.0" layoutY="145.0" prefHeight="23.0" prefWidth="189.0" text="Usuario" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="171.8000030517578" endY="-1.52587890625E-5" layoutX="30.0" layoutY="177.0" startX="-24.79986572265625" startY="-1.52587890625E-5" stroke="WHITE" AnchorPane.leftAnchor="4.70013427734375" />
+                              <Button fx:id="btn_inicio" layoutX="9.0" layoutY="181.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Inicio" AnchorPane.leftAnchor="9.0">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="HOME" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btn_alumnos" layoutX="9.0" layoutY="218.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Alumnos" AnchorPane.leftAnchor="9.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="USERS" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_cursos" layoutX="9.0" layoutY="253.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Cursos" AnchorPane.leftAnchor="9.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="BOOK" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_bases" layoutX="9.0" layoutY="288.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Bases" AnchorPane.leftAnchor="9.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="MAP" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_instituciones" layoutX="9.0" layoutY="323.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Instituciones" AnchorPane.leftAnchor="9.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="INSTITUTION" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_expediente" layoutX="9.0" layoutY="358.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Expediente" AnchorPane.leftAnchor="9.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="CLIPBOARD" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_instructores" layoutX="9.0" layoutY="393.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Instructores" AnchorPane.leftAnchor="9.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="USER" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_asignaciónCursos" layoutX="9.0" layoutY="428.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Asignación de Cursos" AnchorPane.leftAnchor="9.0">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="BOOK" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btn_usuarios" layoutX="9.0" layoutY="463.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="30.0" prefWidth="190.0" styleClass="btn-Menu" stylesheets="@DiseñoPrincipal.css" text="Usuarios" AnchorPane.leftAnchor="9.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#f7f7f7" glyphName="USER_CIRCLE" selectionFill="#fcfcfc" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_cerrarSesión" layoutX="11.0" layoutY="505.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="30.0" prefWidth="185.0" stylesheets="@DiseñoPrincipal.css" text="Cerrar Sesión" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="11.0">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#faf5f5" glyphName="SIGN_OUT" size="2em" />
+                                 </graphic>
+                                 <styleClass>
+                                    <String fx:value="btnLog-out" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <font>
+                                    <Font name="Tahoma" size="15.0" />
+                                 </font>
+                              </Button>
+                              <Line endX="171.8000030517578" endY="-1.52587890625E-5" layoutX="37.0" layoutY="497.0" startX="-24.79986572265625" startY="-1.52587890625E-5" stroke="WHITE" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane fx:id="formulario_inicio" layoutX="78.0" layoutY="151.0" prefHeight="554.4" prefWidth="879.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="530.0" prefWidth="854.0" stylesheets="@DiseñoPrincipal.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="-1.0" prefHeight="152.0" prefWidth="854.0" stylesheets="@DiseñoPrincipal.css">
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <AnchorPane layoutX="8.0" layoutY="6.0" prefHeight="139.0" prefWidth="250.0" stylesheets="@DiseñoPrincipal.css">
+                                             <children>
+                                                <FontAwesomeIconView fill="#f4f1f1" glyphName="USERS" layoutX="14.0" layoutY="85.0" size="4em" />
+                                                <Label layoutX="83.0" layoutY="92.0" text="Total de Alumnos" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Tahoma" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="inicio_contadorTotal" alignment="CENTER_RIGHT" layoutX="77.0" layoutY="28.0" prefHeight="30.0" prefWidth="156.0" text="0" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Berlin Sans FB" size="25.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <styleClass>
+                                                <String fx:value="menu" />
+                                                <String fx:value="tarjeta" />
+                                             </styleClass>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="302.0" layoutY="6.0" prefHeight="139.0" prefWidth="250.0" stylesheets="@DiseñoPrincipal.css">
+                                             <children>
+                                                <FontAwesomeIconView fill="#f4f1f1" glyphName="FEMALE" layoutX="14.0" layoutY="85.0" size="4em" />
+                                                <Label layoutX="83.0" layoutY="92.0" text="Total Mujeres" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Tahoma" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="inicio_contadorMujeres" alignment="CENTER_RIGHT" layoutX="60.0" layoutY="28.0" prefHeight="30.0" prefWidth="173.0" text="0" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Berlin Sans FB" size="25.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <styleClass>
+                                                <String fx:value="menu" />
+                                                <String fx:value="tarjeta" />
+                                             </styleClass>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="596.0" layoutY="6.0" prefHeight="139.0" prefWidth="250.0" stylesheets="@DiseñoPrincipal.css">
+                                             <children>
+                                                <FontAwesomeIconView fill="#f4f1f1" glyphName="MALE" layoutX="14.0" layoutY="85.0" size="4em" />
+                                                <Label layoutX="83.0" layoutY="92.0" text="Total Hombres" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Tahoma" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="inicio_contadorHombres" alignment="CENTER_RIGHT" layoutX="54.0" layoutY="28.0" prefHeight="30.0" prefWidth="179.0" text="0" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Berlin Sans FB" size="25.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <styleClass>
+                                                <String fx:value="menu" />
+                                                <String fx:value="tarjeta" />
+                                             </styleClass>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="14.0" layoutY="172.0" prefHeight="348.0" prefWidth="402.0" stylesheets="@DiseñoPrincipal.css">
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <BarChart fx:id="inicio_gráficaTotal" layoutX="-49.0" layoutY="-11.0" prefHeight="389.6" prefWidth="451.2" title="Total Alumnos Capacitados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </BarChart>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="434.0" layoutY="172.0" prefHeight="165.0" prefWidth="405.0" stylesheets="@DiseñoPrincipal.css">
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <LineChart fx:id="inicio_gráficaMujeres" layoutX="-54.0" layoutY="-92.0" prefHeight="308.0" prefWidth="446.4" title="Total Mujeres Capacitadas" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </LineChart>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="434.0" layoutY="354.0" prefHeight="165.0" prefWidth="405.0" stylesheets="@DiseñoPrincipal.css">
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <LineChart fx:id="inicio_gráficaHombres" layoutX="-72.0" layoutY="-139.0" prefHeight="261.6" prefWidth="428.0" title="Total Hombres Capacitados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </LineChart>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_alumnos" layoutX="307.0" layoutY="170.0" prefHeight="554.4" prefWidth="873.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutY="150.0" prefHeight="387.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TextField fx:id="buscar_alumnos" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="tabla_alumnos" layoutX="13.0" layoutY="58.0" onMouseClicked="#SeleccionarAlumno" prefHeight="318.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                            <columns>
+                                              <TableColumn fx:id="tabla_alumnos_id" prefWidth="45.0" style="-fx-background-color: transparent;" text="ID" />
+                                              <TableColumn fx:id="tabla_alumnos_nombre" prefWidth="228.0000228881836" style="-fx-background-color: transparent;" text="Nombre" />
+                                                <TableColumn fx:id="tabla_alumnos_dni" prefWidth="137.60003662109375" style="-fx-background-color: transparent;" text="DNI" />
+                                                <TableColumn fx:id="tabla_alumnos_email" prefWidth="171.19998168945312" style="-fx-background-color: transparent;" text="Email" />
+                                                <TableColumn fx:id="tabla_alumnos_teléfono" prefWidth="73.5999755859375" style="-fx-background-color: transparent;" text="Teléfono" />
+                                                <TableColumn fx:id="tabla_alumnos_sexo" prefWidth="78.4000244140625" style="-fx-size: 40px; -fx-background-color: transparent;" text="Sexo" />
+                                                <TableColumn fx:id="tabla_alumnos_direccion" prefWidth="93.59991455078125" style="-fx-background-color: transparent;" text="Dirección" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                          <Button fx:id="btn_imprimir_alumnos" layoutX="761.0" layoutY="11.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Imprimir" />
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <Label layoutX="414.0" layoutY="18.0" text="Email:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="alumnos_email" layoutX="460.0" layoutY="15.0" prefHeight="25.0" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="66.0" layoutY="19.0" text="Nombre:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="alumnos_nombre" layoutX="130.0" layoutY="14.0" prefHeight="25.0" prefWidth="245.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="90.0" layoutY="56.0" text="DNI:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="alumnos_dni" layoutX="130.0" layoutY="51.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="392.0" layoutY="55.0" text="Teléfono:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="alumnos_teléfono" layoutX="459.0" layoutY="51.0" prefHeight="25.0" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="642.0" layoutY="17.0" text="Sexo:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="alumnos_sexo" layoutX="688.0" layoutY="14.0" prefHeight="25.0" prefWidth="101.0" promptText="Seleccione" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Button fx:id="btn_agregar_alumnos" layoutX="498.0" layoutY="99.0" mnemonicParsing="false" onAction="#agregarAlumno" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                    <Button fx:id="btn_modificar_alumnos" layoutX="578.0" layoutY="99.0" mnemonicParsing="false" onAction="#modificarAlumno" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                    <Button fx:id="btn_eliminar_alumnos" layoutX="686.0" layoutY="99.0" mnemonicParsing="false" onAction="#eliminarAlumno" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                    <Button fx:id="btn_limpiar_alumnos" layoutX="766.0" layoutY="99.0" mnemonicParsing="false" onAction="#limpiarAlumnos" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                    <Label layoutX="657.0" layoutY="56.0" text="ID:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="alumnos_id" editable="false" layoutX="689.0" layoutY="51.0" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="59.0" layoutY="93.0" text="Dirección:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="alumnos_dirección" layoutX="131.0" layoutY="88.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_instructores" prefHeight="554.4" prefWidth="873.6" visible="false">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutY="149.0" prefHeight="388.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TextField fx:id="buscar_instructores" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="tabla_instructores" layoutX="13.0" layoutY="58.0" onMouseClicked="#SeleccionarInstructor" prefHeight="307.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                             <columns>
+                                                <TableColumn fx:id="tabla_instructores_id" prefWidth="45.0" style="-fx-background-color: transparent;" text="ID" />
+                                                <TableColumn fx:id="tabla_instructores_nombre" prefWidth="234.40001678466797" style="-fx-background-color: transparent;" text="Nombre" />
+                                                <TableColumn fx:id="tabla_instructores_sexo" prefWidth="84.79998779296875" style="-fx-background-color: transparent;" text="Sexo" />
+                                                <TableColumn fx:id="tabla_instructores_dni" prefWidth="134.40005493164062" style="-fx-background-color: transparent;" text="DNI" />
+                                                <TableColumn fx:id="tabla_instructores_email" prefWidth="178.4000244140625" style="-fx-background-color: transparent;" text="Email" />
+                                                <TableColumn fx:id="tabla_instructores_teléfono" prefWidth="92.7999267578125" style="-fx-size: 40px; -fx-background-color: transparent;" text="Teléfono" />
+                                                <TableColumn fx:id="tabla_instructores_base" prefWidth="62.4000244140625" style="-fx-size: 40px; -fx-background-color: transparent;" text="Base" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                          <Button fx:id="btn_imprimir_instructores" layoutX="765.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Imprimir" />
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <Label layoutX="414.0" layoutY="18.0" text="Email:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="instructores_email" layoutX="460.0" layoutY="15.0" prefHeight="25.0" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="66.0" layoutY="19.0" text="Nombre:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="instructores_nombre" layoutX="130.0" layoutY="14.0" prefHeight="25.0" prefWidth="245.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="90.0" layoutY="56.0" text="DNI:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="instructores_dni" layoutX="130.0" layoutY="51.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="392.0" layoutY="55.0" text="Teléfono:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="instructores_teléfono" layoutX="459.0" layoutY="51.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="641.0" layoutY="17.0" text="Sexo:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="instructores_sexo" layoutX="688.0" layoutY="14.0" prefHeight="25.0" prefWidth="101.0" promptText="Seleccione" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Button fx:id="btn_agregar_instructores" layoutX="500.0" layoutY="98.0" mnemonicParsing="false" onAction="#agregarInstructor" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                    <Button fx:id="btn_modificar_instructores" layoutX="579.0" layoutY="98.0" mnemonicParsing="false" onAction="#modificarInstructor" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                    <Button fx:id="btn_eliminar_instructores" layoutX="687.0" layoutY="98.0" mnemonicParsing="false" onAction="#eliminarInstructor" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                    <Button fx:id="btn_limpiar_instructores" layoutX="767.0" layoutY="98.0" mnemonicParsing="false" onAction="#limpiarInstructores" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                    <Label layoutX="659.0" layoutY="56.0" text="ID:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="instructores_id" editable="false" layoutX="689.0" layoutY="51.0" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="85.0" layoutY="92.0" text="Base:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="instructores_base" layoutX="130.0" layoutY="88.0" prefHeight="26.0" prefWidth="145.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_asignaciónCursos" layoutY="1.0" prefHeight="554.4" prefWidth="873.6" visible="false">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutY="185.0" prefHeight="353.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TextField fx:id="buscar_asignaciónCurso" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="tabla_asignaciónCurso" layoutX="13.0" layoutY="58.0" prefHeight="285.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                             <columns>
+                                                <TableColumn fx:id="tabla_asignaciónCurso_id" prefWidth="45.0" style="-fx-background-color: transparent;" text="ID" />
+                                                <TableColumn fx:id="tabla_asignaciónCurso_curso" prefWidth="190.39997100830078" style="-fx-background-color: transparent;" text="Curso" />
+                                                <TableColumn fx:id="tabla_asignaciónCurso_instructor" prefWidth="188.00009155273438" style="-fx-background-color: transparent;" text="Instructor" />
+                                                <TableColumn fx:id="tabla_asignaciónCurso_institución" prefWidth="164.79995727539062" style="-fx-background-color: transparent;" text="Institución" />
+                                                <TableColumn fx:id="tabla_asignaciónCurso_inicio" prefWidth="82.39990234375" style="-fx-background-color: transparent;" text="Inicio" />
+                                                <TableColumn fx:id="tabla_asignaciónCurso_horas" prefWidth="78.400146484375" style="-fx-size: 40px; -fx-background-color: transparent;" text="Horas" />
+                                                <TableColumn fx:id="tabla_asignaciónCurso_lugar" prefWidth="80.800048828125" style="-fx-size: 40px; -fx-background-color: transparent;" text="Lugar" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                          <Button fx:id="btn_detalle_asignaciónCurso" layoutX="770.0" layoutY="9.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Detalle" />
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <Label layoutX="414.0" layoutY="18.0" text="Fecha de Inicio:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="78.0" layoutY="19.0" text="Curso:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="407.0" layoutY="55.0" text="Duración en Hrs:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="asignaciónCurso_duración" layoutX="522.0" layoutY="51.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <ComboBox fx:id="asignaciónCurso_instructor" layoutX="130.0" layoutY="52.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Button fx:id="btn_agregar_asignaciónCurso" layoutX="501.0" layoutY="133.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                    <Button fx:id="btn_modificar_asignaciónCurso" layoutX="581.0" layoutY="133.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                    <Button fx:id="btn_eliminar_asignaciónCurso" layoutX="689.0" layoutY="133.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                    <Button fx:id="btn_limpiar_asignaciónCurso" layoutX="769.0" layoutY="133.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                    <Label layoutX="694.0" layoutY="20.0" text="ID:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="asignaciónCurso_id" editable="false" layoutX="724.0" layoutY="15.0" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="54.0" layoutY="56.0" text="Instructor:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="asignaciónCurso_institución" layoutX="130.0" layoutY="91.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="49.0" layoutY="95.0" text="Institución:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="asignaciónCurso_curso" layoutX="130.0" layoutY="16.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <DatePicker fx:id="asignaciónCurso_fechaInicio" layoutX="522.0" layoutY="14.0" prefHeight="26.0" prefWidth="145.0" promptText="*Obligatorio" stylesheets="@DiseñoPrincipal.css" />
+                                    <Label layoutX="407.0" layoutY="95.0" text="Lugar Impartido:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="asignaciónCurso_lugarImpartido" layoutX="522.0" layoutY="91.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_expediente" layoutX="1.0" layoutY="1.0" prefHeight="554.4" prefWidth="873.6" visible="false">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutY="150.0" prefHeight="387.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TextField fx:id="buscar_expediente" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="tabla_expediente" layoutX="13.0" layoutY="58.0" prefHeight="318.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                             <columns>
+                                                <TableColumn fx:id="tabla_expediente_id" prefWidth="45.0" style="-fx-background-color: transparent; -fx-size: 35px;" text="ID" />
+                                                <TableColumn fx:id="tabla_expediente_nombre" prefWidth="259.1999282836914" style="-fx-background-color: transparent;" text="Nombre" />
+                                                <TableColumn fx:id="tabla_expediente_curso" prefWidth="167.20001220703125" style="-fx-background-color: transparent;" text="Curso" />
+                                                <TableColumn fx:id="tabla_expediente_certificado" prefWidth="203.20004272460938" style="-fx-background-color: transparent;" text="Certificado" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                          <Button fx:id="btn_imprimir_expediente" layoutX="761.0" layoutY="11.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Imprimir" />
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <Label layoutX="410.0" layoutY="18.0" text="Curso:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="66.0" layoutY="19.0" text="Nombre:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="48.0" layoutY="56.0" text="Certificado:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="expediente_certificado" layoutX="130.0" layoutY="51.0" prefHeight="26.0" prefWidth="246.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <ComboBox fx:id="expediente_nombreAlumno" layoutX="130.0" layoutY="13.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Button fx:id="btn_agregar_expediente" layoutX="498.0" layoutY="99.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                    <Button fx:id="btn_modificar_expediente" layoutX="578.0" layoutY="99.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                    <Button fx:id="btn_eliminar_expediente" layoutX="686.0" layoutY="99.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                    <Button fx:id="btn_limpiar_expediente" layoutX="766.0" layoutY="99.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                    <Label layoutX="430.0" layoutY="57.0" text="ID:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="expediente_id" editable="false" layoutX="460.0" layoutY="52.0" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <ComboBox fx:id="expediente_curso" layoutX="460.0" layoutY="15.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_cursos" prefHeight="554.4" prefWidth="873.6" visible="false">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="391.0" layoutY="12.0" prefHeight="513.0" prefWidth="451.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TextField fx:id="buscar_cursos" layoutX="172.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="179.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="tabla_cursos" layoutX="6.0" layoutY="58.0" onMouseClicked="#SeleccionarCurso" prefHeight="449.0" prefWidth="439.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                             <columns>
+                                                <TableColumn fx:id="tabla_cursos_id" prefWidth="45.0" style="-fx-background-color: transparent; -fx-size: 35px;" text="ID" />
+                                                <TableColumn fx:id="tabla_cursos_nombre" prefWidth="259.1999282836914" style="-fx-background-color: transparent;" text="Nombre del Curso" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="514.0" prefWidth="358.0" stylesheets="@DiseñoPrincipal.css">
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Button fx:id="btn_agregar_cursos" layoutX="17.0" layoutY="166.0" mnemonicParsing="false" onAction="#agregarCurso" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                          <Button fx:id="btn_modificar_cursos" layoutX="97.0" layoutY="166.0" mnemonicParsing="false" onAction="#modificarCurso" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                          <Button fx:id="btn_eliminar_cursos" layoutX="188.0" layoutY="166.0" mnemonicParsing="false" onAction="#eliminarCurso" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                          <Button fx:id="btn_limpiar_cursos" layoutX="272.0" layoutY="166.0" mnemonicParsing="false" onAction="#limpiarCursos" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                          <Label layoutX="24.0" layoutY="106.0" text="Nombre:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="cursos_nombre" layoutX="88.0" layoutY="100.0" prefHeight="26.0" prefWidth="246.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                          <Label layoutX="59.0" layoutY="68.0" text="ID:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="cursos_id" editable="false" layoutX="89.0" layoutY="63.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                          <ImageView fitHeight="211.0" fitWidth="243.0" layoutX="58.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../img/Curso.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_bases" prefHeight="554.4" prefWidth="873.6" visible="false">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="391.0" layoutY="12.0" prefHeight="513.0" prefWidth="451.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TextField fx:id="buscar_bases" layoutX="172.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="179.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="tabla_bases" layoutX="6.0" layoutY="58.0" onMouseClicked="#SeleccionarBase" prefHeight="449.0" prefWidth="439.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                             <columns>
+                                                <TableColumn fx:id="tabla_bases_id" prefWidth="44.7999267578125" style="-fx-background-color: transparent; -fx-size: 35px;" text="ID" />
+                                                <TableColumn fx:id="tabla_bases_ubicación" prefWidth="220.80007934570312" style="-fx-background-color: transparent;" text="Ubicación de la Base" />
+                                                <TableColumn fx:id="tabla_bases_código" prefWidth="174.39996337890625" style="-fx-background-color: transparent;" text="Código de la Base" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="514.0" prefWidth="358.0" stylesheets="@DiseñoPrincipal.css">
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Button fx:id="btn_agregar_bases" layoutX="17.0" layoutY="194.0" mnemonicParsing="false" onAction="#agregarBase" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                          <Button fx:id="btn_modificar_bases" layoutX="97.0" layoutY="194.0" mnemonicParsing="false" onAction="#modificarBase" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                          <Button fx:id="btn_eliminar_bases" layoutX="188.0" layoutY="194.0" mnemonicParsing="false" onAction="#eliminarBase" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                          <Button fx:id="btn_limpiar_bases" layoutX="272.0" layoutY="194.0" mnemonicParsing="false" onAction="#limpiarBases" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                          <Label layoutX="36.0" layoutY="100.0" text="Ubicación:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="bases_ubicación" layoutX="110.0" layoutY="94.0" prefHeight="26.0" prefWidth="200.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                          <Label layoutX="81.0" layoutY="62.0" text="ID:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="bases_id" editable="false" layoutX="111.0" layoutY="57.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                          <ImageView fitHeight="211.0" fitWidth="243.0" layoutX="52.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../img/Ubicación.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label layoutX="51.0" layoutY="138.0" text="Código:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="bases_código" layoutX="110.0" layoutY="132.0" prefHeight="26.0" prefWidth="200.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_instituciones" layoutY="1.0" prefHeight="554.4" prefWidth="873.6" visible="false">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="391.0" layoutY="12.0" prefHeight="513.0" prefWidth="451.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TextField fx:id="buscar_instituciones" layoutX="172.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="179.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="tabla_instituciones" layoutX="6.0" layoutY="58.0" onMouseClicked="#SeleccionarInstitucion" prefHeight="449.0" prefWidth="439.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                             <columns>
+                                                <TableColumn fx:id="tabla_instituciones_id" prefWidth="45.0" style="-fx-background-color: transparent; -fx-size: 35px;" text="ID" />
+                                                <TableColumn fx:id="tabla_instituciones_nombre" prefWidth="259.1999282836914" style="-fx-background-color: transparent;" text="Nombre de la Institución" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                          <Button fx:id="btn_imprimir_instituciones" layoutX="17.0" layoutY="8.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Imprimir" />
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="514.0" prefWidth="358.0" stylesheets="@DiseñoPrincipal.css">
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Button fx:id="btn_agregar_instituciones" layoutX="17.0" layoutY="153.0" mnemonicParsing="false" onAction="#agregarInstitucion" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                          <Button fx:id="btn_modificar_instituciones" layoutX="97.0" layoutY="153.0" mnemonicParsing="false" onAction="#modificarInstitucion" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                          <Button fx:id="btn_eliminar_instituciones" layoutX="188.0" layoutY="153.0" mnemonicParsing="false" onAction="#eliminarInstitucion" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                          <Button fx:id="btn_limpiar_instituciones" layoutX="272.0" layoutY="153.0" mnemonicParsing="false" onAction="#limpiarInstituciones" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                          <Label layoutX="41.0" layoutY="93.0" text="Nombre:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="instituciones_nombre" layoutX="105.0" layoutY="87.0" prefHeight="26.0" prefWidth="200.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                          <Label layoutX="76.0" layoutY="55.0" text="ID:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="instituciones_id" editable="false" layoutX="106.0" layoutY="50.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                          <ImageView fitHeight="211.0" fitWidth="243.0" layoutX="58.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../img/Institución.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_usuarios" prefHeight="554.4" prefWidth="873.6" visible="false">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="391.0" layoutY="12.0" prefHeight="513.0" prefWidth="451.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TextField fx:id="buscar_usuarios" layoutX="172.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="179.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="tabla_usuarios" layoutX="6.0" layoutY="58.0" onMouseClicked="#SeleccionarUsuario" prefHeight="449.0" prefWidth="439.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                             <columns>
+                                                <TableColumn fx:id="tabla_usuarios_usuario" prefWidth="185.60006713867188" style="-fx-background-color: transparent;" text="Usuario" />
+                                                <TableColumn fx:id="tabla_usuarios_contraseña" prefWidth="132.79998779296875" style="-fx-background-color: transparent;" text="Contraseña" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="514.0" prefWidth="358.0" stylesheets="@DiseñoPrincipal.css">
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Button fx:id="btn_agregar_usuarios" layoutX="18.0" layoutY="189.0" mnemonicParsing="false" onAction="#agregarUsuario" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                          <Button fx:id="btn_modificar_usuarios" layoutX="98.0" layoutY="189.0" mnemonicParsing="false" onAction="#modificarUsuario" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                          <Button fx:id="btn_eliminar_usuarios" layoutX="189.0" layoutY="189.0" mnemonicParsing="false" onAction="#eliminarUsuario" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                          <Button fx:id="btn_limpiar_usuarios" layoutX="273.0" layoutY="189.0" mnemonicParsing="false" onAction="#limpiarUsuarios" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                          <Label layoutX="52.0" layoutY="100.0" text="Usuario:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="usuarios_usuario" layoutX="116.0" layoutY="95.0" prefHeight="26.0" prefWidth="200.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                          <ImageView fitHeight="211.0" fitWidth="243.0" layoutX="93.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../img/Admin.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label layoutX="31.0" layoutY="138.0" text="Contraseña:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="Usuarios_contraseña" layoutX="117.0" layoutY="133.0" prefHeight="26.0" prefWidth="200.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="formulario_informe_asignaciónCursos" layoutY="1.0" prefHeight="554.4" prefWidth="873.6" visible="false">
+                           <children>
+                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                 <styleClass>
+                                    <String fx:value="fondo-blanco" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutY="133.0" prefHeight="406.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
+                                       <children>
+                                          <TableView fx:id="tabla_asignaciónCurso1" layoutX="13.0" layoutY="51.0" prefHeight="348.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                             <columns>
+                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_id" prefWidth="45.0" style="-fx-background-color: transparent;" text="ID" />
+                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_nombre_alumno" prefWidth="289.5999984741211" style="-fx-background-color: transparent;" text="Nombre del Alumno" />
+                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_dni" prefWidth="184.80001831054688" style="-fx-background-color: transparent;" text="DNI" />
+                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_sexo" prefWidth="96.800048828125" style="-fx-background-color: transparent;" text="Sexo" />
+                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_certificado" prefWidth="196.7999267578125" style="-fx-size: 40px; -fx-background-color: transparent;" text="Certificado" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                          <Button fx:id="btn_imprimir_detalle_asignaciónCurso" layoutX="770.0" layoutY="9.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Imprimir" />
+                                          <Label layoutX="9.0" layoutY="14.0" text="ID:">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="informe_etiqueta_id" layoutX="39.0" layoutY="14.0" text="Etiqueta_id">
+                                             <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="fondo-blanco" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <Label layoutX="459.0" layoutY="20.0" text="Fecha de Inicio:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="186.0" layoutY="18.0" text="Curso:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="457.0" layoutY="55.0" text="Duración en Hrs:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="162.0" layoutY="55.0" text="Instructor:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="157.0" layoutY="94.0" text="Institución:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="457.0" layoutY="95.0" text="Lugar Impartido:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="informe_etiqueta_nombre_curso" layoutX="238.0" layoutY="19.0" text="Etiqueta_nombre_curso">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="informe_etiqueta_nombre_instructor" layoutX="238.0" layoutY="55.0" text="Etiqueta_nombre_instructor">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="informe_etiqueta_nombre_institución" layoutX="238.0" layoutY="94.0" text="Etiqueta_nombre_institución">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="informe_etiqueta_fecha_inicio" layoutX="578.0" layoutY="20.0" text="Etiqueta_fecha_inicio">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="informe_etiqueta_duración_horas" layoutX="578.0" layoutY="56.0" text="Etiqueta_duración_horas">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="informe_etiqueta_lugar_impartido" layoutX="578.0" layoutY="95.0" text="Etiqueta_lugar_impartido">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="65.0" fitWidth="128.0" layoutX="14.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/Escudo%20ESCAT%20OFICIAL%202.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="92.0" fitWidth="92.0" layoutX="742.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/Escudo%20Cruz%20Verde%20%20Hondureña_Oficial..png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
