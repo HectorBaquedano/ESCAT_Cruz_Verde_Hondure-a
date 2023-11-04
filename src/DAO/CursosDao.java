@@ -87,7 +87,7 @@ public class CursosDao {
 
         try {
             final PreparedStatement statement = con
-                    .prepareStatement("SELECT NOMBRE FROM cursos");
+                    .prepareStatement("SELECT nombre FROM cursos");
     
             try (statement) {
                 statement.execute();

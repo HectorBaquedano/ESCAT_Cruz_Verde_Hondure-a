@@ -98,7 +98,7 @@ public class AlumnosDao {
 
         try {
             final PreparedStatement statement = con
-                    .prepareStatement("SELECT id, nombre FROM alumnos");
+                    .prepareStatement("SELECT nombre FROM alumnos");
     
             try (statement) {
                 statement.execute();
@@ -107,7 +107,7 @@ public class AlumnosDao {
     
                 try (resultSet) {
                     while (resultSet.next()) {
-                        resultado.add(resultSet.getString("ID")+" | "+resultSet.getString("NOMBRE"));
+                        resultado.add(resultSet.getString("NOMBRE"));
                     }
                 }
             }

@@ -9,31 +9,34 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import model.Bases;
+import model.Expedientes;
 
 
-public class BasesDao {
+public class ExpedientesDao {
 
     private final Connection con;
     private Alert alerta;
+    private String certificado;
 
-    public BasesDao(Connection con) {
+    public ExpedientesDao(Connection con) {
         this.con = con;
     }  
-    
-    public void guardar(Bases bases) {
+        
+    public void guardar(Expedientes expedientes) {
         try {
             PreparedStatement statement;
                 statement = con.prepareStatement(
-                        "INSERT INTO bases (ubicacion, codigo) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+                        "INSERT INTO expedientes "
+                        + "(alumno, fechaInicio, certificado)"
+                        + " VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
     
             try (statement) {
-                statement.setString(1, bases.getUbicacion());
-                statement.setString(2, bases.getCodigo());
+                statement.setString(1, expedientes.getAlumno());
+                statement.setString(2, expedientes.getFechaInicio());
+                statement.setString(3, expedientes.getCertificado());
     
                 statement.execute();
     
@@ -41,11 +44,11 @@ public class BasesDao {
     
                 try (resultSet) {
                     while (resultSet.next()) {
-                        bases.setId(resultSet.getInt(1));
+                        expedientes.setId(resultSet.getInt(1));  
                         this.alerta = new Alert(Alert.AlertType.INFORMATION);
                         alerta.setTitle("Información");
                         alerta.setHeaderText(null);
-                        alerta.setContentText("Base guardada con éxito!");
+                        alerta.setContentText("Expediente guardado con éxito!");
                         alerta.showAndWait();
                     }
                 }
@@ -55,12 +58,12 @@ public class BasesDao {
         }
     }
 
-    public ObservableList<Bases> listar() {
-        ObservableList<Bases> resultado = FXCollections.observableArrayList();
+    public ObservableList<Expedientes> listar() {
+        ObservableList<Expedientes> resultado = FXCollections.observableArrayList();
 
         try {
             final PreparedStatement statement = con
-                    .prepareStatement("SELECT ID, UBICACION, CODIGO FROM bases");
+                    .prepareStatement("SELECT id, alumno, fechaInicio, certificado FROM expedientes");
     
             try (statement) {
                 statement.execute();
@@ -69,37 +72,11 @@ public class BasesDao {
     
                 try (resultSet) {
                     while (resultSet.next()) {
-                        resultado.add(new Bases(
+                        resultado.add(new Expedientes(
                                 resultSet.getInt("id"),
-                                resultSet.getString("UBICACION"),
-                                resultSet.getString("CODIGO")));
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return resultado;
-    }
-
-    public ArrayList <String> listarBasesComboBox() {
-        
-        ArrayList<String> resultado = new ArrayList();
-
-        try {
-            final PreparedStatement statement = con
-                    .prepareStatement("SELECT codigo FROM bases");
-    
-            try (statement) {
-                statement.execute();
-    
-                final ResultSet resultSet = statement.getResultSet();
-    
-                try (resultSet) {
-                    while (resultSet.next()) {
-                        //resultado.add(resultSet.getInt("id"));
-                        resultado.add(resultSet.getString("codigo"));
+                                resultSet.getString("alumno"),
+                                resultSet.getString("fechaInicio"),
+                                resultSet.getString("certificado")));
                     }
                 }
             }
@@ -110,9 +87,10 @@ public class BasesDao {
         return resultado;
     }
     
+
     public int eliminar(Integer id) {
         try {
-            final PreparedStatement statement = con.prepareStatement("DELETE FROM bases WHERE ID = ?");
+            final PreparedStatement statement = con.prepareStatement("DELETE FROM expedientes WHERE ID = ?");
 
             try (statement) {
                 statement.setInt(1, id);
@@ -122,8 +100,9 @@ public class BasesDao {
                         this.alerta = new Alert(Alert.AlertType.INFORMATION);
                         alerta.setTitle("Información");
                         alerta.setHeaderText(null);
-                        alerta.setContentText("Base eliminada con éxito!");
+                        alerta.setContentText("Expediente eliminado con éxito!");
                         alerta.showAndWait();
+
                 return updateCount;
             }
         } catch (SQLException e) {
@@ -131,27 +110,26 @@ public class BasesDao {
         }
     }
 
-    public int modificar(int id, String ubicacion, String codigo) {
-        
+    public int modificar(int id, String alumno, String fechaInicio, String certificado) {
         try {
+            
             final PreparedStatement statement = con.prepareStatement(
-                    "UPDATE bases SET "
-                    + " UBICACION = ?, "
-                    + " CODIGO = ?"
-                    + " WHERE ID = ?");
+                    "UPDATE expedientes SET "
+                    + " alumno = ?, "
+                    + " fechaInicio = ?,"
+                    + " certificado = ?,"
+                    + " fechaInicio = ?"
+                    + " WHERE id = ?");
 
             try (statement) {
-                statement.setString(1, ubicacion);
-                statement.setString(2, codigo);
-                statement.setInt(3, id);
+                statement.setString(1, alumno);
+                statement.setString(2, fechaInicio);
+                statement.setString(3, certificado);
+                statement.setInt(4, id);
                 statement.execute();
 
                 int updateCount = statement.getUpdateCount();
-                        this.alerta = new Alert(Alert.AlertType.INFORMATION);
-                        alerta.setTitle("Información");
-                        alerta.setHeaderText(null);
-                        alerta.setContentText("Base modificada con éxito!");
-                        alerta.showAndWait();
+
                 return updateCount;
             }
         } catch (SQLException e) {
@@ -159,19 +137,19 @@ public class BasesDao {
         }
     }
     
-    public boolean verificarBase(String ubicacion) {
+    public boolean verificarExpediente(String alumno, String fechaInicio) {
         try {
             final PreparedStatement statement = con.prepareStatement(
-                    "SELECT * FROM bases WHERE BINARY ubicacion=?");
+                    "SELECT * FROM expedientes WHERE BINARY alumno=? AND BINARY fechaInicio = ?" );
 
             try (statement) {
-                statement.setString(1, ubicacion);
+                statement.setString(1, alumno);
+                statement.setString(2, fechaInicio);
                 statement.execute();
 
                 ResultSet resultSet = statement.executeQuery();
 
-                return resultSet.next();
-                
+                return resultSet.next();                
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -179,4 +157,3 @@ public class BasesDao {
     }
     
 }
-

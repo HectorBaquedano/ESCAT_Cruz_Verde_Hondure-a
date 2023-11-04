@@ -10,31 +10,34 @@ package model;
  */
 public class Instructores {
     
-    private int id;
+    private Integer id;
     private String nombre;
     private String dni;
     private String email;
     private String telefono;    
     private String sexo;
-    private int idBase;
+    private String base;
     
-    public Instructores(String nombre, String dni, String email, String telefono, String sexo, int idBase) {
+    public Instructores(String nombre, String dni, String email, String telefono, String sexo, String base) {
         this.nombre = nombre;
         this.dni = dni;
         this.email = email;
         this.telefono = telefono;
         this.sexo = sexo;
-        this.idBase = idBase;
+        this.base = base;
     }
     
-    public Instructores(int id, String nombre, String dni, String email, String telefono, String sexo, int idBase) {
+    public Instructores(Integer id, String nombre, String dni, String email, String telefono, String sexo, String base) {
         this.id = id;
         this.nombre = nombre;
         this.dni = dni;
         this.email = email;
         this.telefono = telefono;
         this.sexo = sexo;
-        this.idBase = idBase;
+        this.base = base;
+    }
+    
+    public Instructores(){
     }
     
     public void setId(int id) {
@@ -60,8 +63,8 @@ public class Instructores {
         this.sexo = sexo;
     }
     
-    public void setBase(int idBase) {
-        this.idBase = idBase;
+    public void setBase(String base) {
+        this.base = base;
     }
 
     public int getId() {
@@ -88,8 +91,10 @@ public class Instructores {
         return sexo;
     }
 
-    public int getBase() {
-        return idBase;
-    }
+    public String getBase() {
+        return base;
+         
+    }    
+
     
 }

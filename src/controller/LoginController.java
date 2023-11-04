@@ -23,7 +23,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.Usuarios;
 
 /**
  * FXML Controller class
@@ -45,24 +44,28 @@ public class LoginController implements Initializable {
         @FXML
         private Button btnSalir;   
         
+        public static String nombreUsuario;
+        
         private double x = 0;
         private double y = 0;
         	        
 	@FXML
-	private void eventKey(KeyEvent event) {
-		
-        Object evt = event.getSource();
+	private void validarEspacio(KeyEvent evento) {
+
+        Object evt = evento.getSource();
         
             if(evt.equals(txtUsuario)){
 
-                if(event.getText().equals(" ")){
-                    event.consume();
+                if(evento.getText().equals(" ")){
+                    evento.consume();
+                    System.out.println("espacio");
                 }
 
             }else if(evt.equals(txtPassword)){
 
-                if(event.getText().equals(" ")){
-                    event.consume();
+                if(evento.getText().equals(" ")){
+                    evento.consume();
+                    System.out.println("espacio");
                 }            
 
             }
@@ -82,7 +85,9 @@ public class LoginController implements Initializable {
                     String contraseña = txtPassword.getText();
                     
                 if(UsuariosDao.validarUsuarios(nombre, contraseña)){                 
-                          
+                    
+                    nombreUsuario = nombre;
+                    
                     btnLogin.getScene().getWindow().hide();
                     
                     Parent root = FXMLLoader.load(getClass().getResource("/view/Principal.fxml"));

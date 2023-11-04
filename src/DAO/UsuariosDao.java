@@ -24,8 +24,8 @@ public class UsuariosDao {
 
     private final Connection con;
     private Alert alerta;
-    private PrincipalController pController;
-    
+   
+
 
     public UsuariosDao(Connection con) {
         this.con = con;
@@ -44,9 +44,10 @@ public class UsuariosDao {
 				
 				statement.execute();
 				
-				final ResultSet resultSet = statement.executeQuery();
-
+				final ResultSet resultSet = statement.executeQuery();                         
+                                
                                 return resultSet.next();
+                                
 			}
 		}catch(SQLException e) {
 			throw new RuntimeException(e);

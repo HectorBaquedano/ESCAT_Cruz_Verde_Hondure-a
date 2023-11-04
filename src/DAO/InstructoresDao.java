@@ -23,13 +23,13 @@ public class InstructoresDao {
     public InstructoresDao(Connection con) {
         this.con = con;
     }  
-        
+  
     public void guardar(Instructores instructores) {
         try {
             PreparedStatement statement;
                 statement = con.prepareStatement(
                         "INSERT INTO instructores "
-                        + "(nombre, dni, email, telefono, sexo, id_base)"
+                        + "(nombre, dni, email, telefono, sexo, base)"
                         + " VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
     
             try (statement) {
@@ -38,7 +38,7 @@ public class InstructoresDao {
                 statement.setString(3, instructores.getEmail());
                 statement.setString(4, instructores.getTelefono());                
                 statement.setString(5, instructores.getSexo());
-                statement.setInt(6,instructores.getBase());
+                statement.setString(6,instructores.getBase());
     
                 statement.execute();
     
@@ -55,6 +55,40 @@ public class InstructoresDao {
         }
     }
     
+//    public ObservableList<Instructores> listar() {
+//    ObservableList<Instructores> resultado = FXCollections.observableArrayList();
+//
+//        try {
+//            final PreparedStatement statement = con.prepareStatement(
+//                    "SELECT i.id, i.nombre, i.dni, i.email, i.telefono, i.sexo, b.codigo AS base " +
+//                    "FROM instructores i " +
+//                    "INNER JOIN bases b ON i.id_base = b.id"
+//            );
+//
+//            try (statement) {
+//                statement.execute();
+//
+//                final ResultSet resultSet = statement.getResultSet();
+//
+//                try (resultSet) {
+//                    while (resultSet.next()) {
+//                        resultado.add(new Instructores(
+//                                resultSet.getInt("ID"),
+//                                resultSet.getString("NOMBRE"),
+//                                resultSet.getString("DNI"),
+//                                resultSet.getString("EMAIL"),
+//                                resultSet.getString("TELEFONO"),
+//                                resultSet.getString("SEXO"),
+//                                resultSet.getInt("BASE")));
+//                    }
+//                }
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        return resultado;
+//    }
 
     public ObservableList<Instructores> listar() {
         
@@ -62,7 +96,7 @@ public class InstructoresDao {
 
         try {
             final PreparedStatement statement = con
-                    .prepareStatement("SELECT id, nombre, dni, email, telefono, sexo, id_base FROM instructores");
+                    .prepareStatement("SELECT id, nombre, dni, email, telefono, sexo, base FROM instructores");
     
             try (statement) {
                 statement.execute();
@@ -78,7 +112,7 @@ public class InstructoresDao {
                                 resultSet.getString("EMAIL"),
                                 resultSet.getString("TELEFONO"),
                                 resultSet.getString("SEXO"),
-                                resultSet.getInt("ID_BASE")));
+                                resultSet.getString("BASE")));
                     }
                 }
             }
@@ -131,7 +165,7 @@ public class InstructoresDao {
         }
     }
 
-    public int modificar(int id, String nombre, String dni, String email, String telefono, String sexo, int idBase) {
+    public int modificar(int id, String nombre, String dni, String email, String telefono, String sexo, String base) {
         try {
             final PreparedStatement statement = con.prepareStatement(
                     "UPDATE instructores SET "
@@ -140,7 +174,7 @@ public class InstructoresDao {
                     + " EMAIL = ?,"
                     + " TELEFONO = ?,"                 
                     + " SEXO = ?,"
-                    + " ID_BASE = ?"
+                    + " BASE = ?"
                     + " WHERE ID = ?");
 
             try (statement) {
@@ -149,7 +183,7 @@ public class InstructoresDao {
                 statement.setString(3, email);
                 statement.setString(4, telefono);
                 statement.setString(5, sexo);
-                statement.setInt(6, idBase);
+                statement.setString(6, base);
                 statement.setInt(7, id);
                 statement.execute();
 
@@ -180,6 +214,6 @@ public class InstructoresDao {
             throw new RuntimeException(e);
         }
     }
-    
+
 }
 

@@ -9,12 +9,17 @@ import Factory.ConnectionFactory;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Connection;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,11 +38,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.StringConverter;
 import model.Alumnos;
+import model.AsignacionCursos;
 import model.Bases;
 import model.Cursos;
 import model.Instituciones;
@@ -75,25 +83,25 @@ public class PrincipalController implements Initializable{
     private TextField alumnos_teléfono;
 
     @FXML
-    private ComboBox<?> asignaciónCurso_curso;
+    private ComboBox<String> asignacionCurso_curso;
 
     @FXML
-    private TextField asignaciónCurso_duración;
+    private TextField asignacionCurso_duracion;
 
     @FXML
-    private DatePicker asignaciónCurso_fechaInicio;
+    private DatePicker asignacionCurso_fechaInicio;
 
     @FXML
-    private TextField asignaciónCurso_id;
+    private TextField asignacionCurso_id;
 
     @FXML
-    private ComboBox<?> asignaciónCurso_institución;
+    private ComboBox<String> asignacionCurso_institucion;
 
     @FXML
-    private ComboBox<?> asignaciónCurso_instructor;
+    private ComboBox<String> asignacionCurso_instructor;
 
     @FXML
-    private TextField asignaciónCurso_lugarImpartido;
+    private TextField asignacionCurso_lugarImpartido;
 
     @FXML
     private TextField bases_código;
@@ -258,7 +266,7 @@ public class PrincipalController implements Initializable{
     private TextField buscar_alumnos;
 
     @FXML
-    private TextField buscar_asignaciónCurso;
+    private TextField buscar_asignacionCurso;
 
     @FXML
     private TextField buscar_bases;
@@ -291,13 +299,13 @@ public class PrincipalController implements Initializable{
     private TextField expediente_certificado;
 
     @FXML
-    private ComboBox<?> expediente_curso;
+    private ComboBox<String> expediente_curso;
 
     @FXML
     private TextField expediente_id;
 
     @FXML
-    private ComboBox<?> expediente_nombreAlumno;
+    private ComboBox<String> expediente_nombreAlumno;
 
     @FXML
     private AnchorPane formulario_alumnos;
@@ -378,7 +386,7 @@ public class PrincipalController implements Initializable{
     private TextField instituciones_nombre;
 
     @FXML
-    private ComboBox<?> instructores_base;
+    private ComboBox<String> instructores_base;
 
     @FXML
     private TextField instructores_dni;
@@ -423,31 +431,31 @@ public class PrincipalController implements Initializable{
     private TableColumn<Alumnos, String> tabla_alumnos_direccion;
         
     @FXML
-    private TableView<?> tabla_asignaciónCurso;
+    private TableView<AsignacionCursos> tabla_asignacionCurso;
 
     @FXML
     private TableView<?> tabla_asignaciónCurso1;
 
     @FXML
-    private TableColumn<?, ?> tabla_asignaciónCurso_curso;
+    private TableColumn<AsignacionCursos, String> tabla_asignacionCurso_curso;
 
     @FXML
-    private TableColumn<?, ?> tabla_asignaciónCurso_horas;
+    private TableColumn<AsignacionCursos, String> tabla_asignacionCurso_horas;
 
     @FXML
-    private TableColumn<?, ?> tabla_asignaciónCurso_id;
+    private TableColumn<AsignacionCursos, String> tabla_asignacionCurso_id;
 
     @FXML
-    private TableColumn<?, ?> tabla_asignaciónCurso_inicio;
+    private TableColumn<AsignacionCursos, String> tabla_asignacionCurso_inicio;
 
     @FXML
-    private TableColumn<?, ?> tabla_asignaciónCurso_institución;
+    private TableColumn<AsignacionCursos, String> tabla_asignacionCurso_institucion;
 
     @FXML
-    private TableColumn<?, ?> tabla_asignaciónCurso_instructor;
+    private TableColumn<AsignacionCursos, String> tabla_asignacionCurso_instructor;
 
     @FXML
-    private TableColumn<?, ?> tabla_asignaciónCurso_lugar;
+    private TableColumn<AsignacionCursos, String> tabla_asignacionCurso_lugar;
 
     @FXML
     private TableView<Bases> tabla_bases;
@@ -514,6 +522,9 @@ public class PrincipalController implements Initializable{
 
     @FXML
     private TableColumn<Instructores, String> tabla_instructores_base;
+    
+    @FXML
+    private TableColumn<Instructores, String> tabla_instructores_idBase;
 
     @FXML
     private TableColumn<Instructores, String> tabla_instructores_dni;
@@ -557,6 +568,8 @@ public class PrincipalController implements Initializable{
     
     private UsuariosDao usuariosDao;
     
+    private AsignacionCursosController asignacionCursosController;
+        
     private AlumnosController alumnosController;
     
     private CursosController cursosController;
@@ -577,6 +590,9 @@ public class PrincipalController implements Initializable{
     
     private Bases bases;
     
+    public static String nombreUsuario;
+    
+    private LoginController loginController;
     
     private Alert alerta;
             
@@ -584,9 +600,7 @@ public class PrincipalController implements Initializable{
     private double y = 0;
     
     private String[] listaSexo = {"Masculino","Femenino"};  
-    private LoginController loginController;
     
-
     public void listaGeneroComboBox(){
         List<String> genero = new ArrayList();
         
@@ -597,7 +611,185 @@ public class PrincipalController implements Initializable{
         alumnos_sexo.setItems(obList);
         instructores_sexo.setItems(obList);        
     }
+
+    
+//----------------INICIO DE LOS METODOS DE ASIGNACIÓN DE CURSOS-------------------------------------//
         
+    public void limpiarAsignaciones(){                
+        asignacionCurso_curso.getSelectionModel().clearSelection();
+        asignacionCurso_instructor.getSelectionModel().clearSelection();
+        asignacionCurso_institucion.getSelectionModel().clearSelection();
+        asignacionCurso_duracion.setText("");
+        asignacionCurso_lugarImpartido.setText("");
+        asignacionCurso_fechaInicio.setValue(null);
+    }
+    
+    public void SeleccionarAsignacion(){
+    
+        AsignacionCursos asignacionCursos = tabla_asignacionCurso.getSelectionModel().getSelectedItem();
+        int num = tabla_asignacionCurso.getSelectionModel().getSelectedIndex();
+        
+        if((num-1)<-1) return;
+       
+        asignacionCurso_curso.getSelectionModel().select(asignacionCursos.getCurso());
+        asignacionCurso_instructor.getSelectionModel().select(asignacionCursos.getInstructor());
+        asignacionCurso_institucion.getSelectionModel().select(asignacionCursos.getInstitucion());
+        asignacionCurso_fechaInicio.setValue(asignacionCursos.getFechaInicio());
+        asignacionCurso_duracion.setText(asignacionCursos.getDuracion());
+        asignacionCurso_lugarImpartido.setText(asignacionCursos.getLugarImpartido());
+    }
+    
+    public void agregarAsignacion(){
+        
+        this.asignacionCursosController = new AsignacionCursosController();
+        basesController = new BasesController();
+        
+        if(asignacionCurso_curso.getItems().isEmpty()|| asignacionCurso_instructor.getItems().isEmpty()
+                || asignacionCurso_institucion.getItems().isEmpty()|| asignacionCurso_fechaInicio.getValue() == null
+                || asignacionCurso_duracion.getText().isBlank() || asignacionCurso_lugarImpartido.getText().isBlank()){
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Información");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Ninguno de los campos no pueden estar vacíos");
+            alerta.showAndWait();
+            
+        }else if(asignacionCursosController.verificar(asignacionCurso_curso.getSelectionModel().getSelectedItem(),
+                asignacionCurso_institucion.getSelectionModel().getSelectedItem(), asignacionCurso_fechaInicio.getValue())){
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Información");
+            alerta.setHeaderText(null);
+            alerta.setContentText("La asignación del curso '"+ asignacionCurso_curso.getSelectionModel().getSelectedItem()
+                    + "' con fecha '" + asignacionCurso_fechaInicio.getValue()
+                    + " a la institución " + asignacionCurso_institucion.getSelectionModel().getSelectedItem() + "', ya existe!");
+            alerta.showAndWait();
+            
+        }else{
+            asignacionCursosController.guardar( new AsignacionCursos(asignacionCurso_curso.getSelectionModel().getSelectedItem(),
+                    asignacionCurso_instructor.getSelectionModel().getSelectedItem(),
+                    asignacionCurso_institucion.getSelectionModel().getSelectedItem(),
+                    asignacionCurso_fechaInicio.getValue(), asignacionCurso_duracion.getText(),
+                    asignacionCurso_lugarImpartido.getText()));
+
+            limpiarAsignaciones();
+            mostrarTablaAsignaciones();            
+        }       
+    }
+     
+    public void eliminarAsignacion(){
+                
+        AsignacionCursos asignaciones = tabla_asignacionCurso.getSelectionModel().getSelectedItem();
+        int num = tabla_asignacionCurso.getSelectionModel().getSelectedIndex();
+        
+        if((num-1)<-1) return;
+        
+            alerta = new Alert(Alert.AlertType.CONFIRMATION);
+            alerta.setTitle("Advertencia!!!");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Está seguro que desea borrar la asignación '"+ asignaciones.getId()+ "'?");
+            ButtonType confirmar = new ButtonType("Confirmar");
+            ButtonType cancelar = new ButtonType("Cancelar");
+            alerta.getButtonTypes().setAll(confirmar,cancelar);
+            Optional<ButtonType> opcion = alerta.showAndWait();
+                       
+            if(opcion.get().equals(confirmar)){        
+                asignacionCursosController.eliminar(asignaciones.getId());
+            }else return;
+        
+        limpiarAsignaciones();
+        mostrarTablaAsignaciones();
+    } 
+    
+    public void modificarAsignacionCurso(){
+                
+        AsignacionCursos asignacionCursos = tabla_asignacionCurso.getSelectionModel().getSelectedItem();
+        int num = tabla_asignacionCurso.getSelectionModel().getSelectedIndex();
+        
+        if((num-1)<-1) return;
+        
+            alerta = new Alert(Alert.AlertType.CONFIRMATION);
+            alerta.setTitle("Advertencia!!!");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Está seguro que desea modificar la asignación '"+ asignacionCursos.getId()+ "'?");
+            ButtonType confirmar = new ButtonType("Confirmar");
+            ButtonType cancelar = new ButtonType("Cancelar");
+            alerta.getButtonTypes().setAll(confirmar,cancelar);
+            Optional<ButtonType> opcion = alerta.showAndWait();
+                       
+            if(opcion.get().equals(confirmar)){                
+                asignacionCursosController.modificar(asignacionCursos.getId(), 
+                        asignacionCurso_curso.getSelectionModel().getSelectedItem(),
+                        asignacionCurso_instructor.getSelectionModel().getSelectedItem(),
+                        asignacionCurso_institucion.getSelectionModel().getSelectedItem(),                        
+                        asignacionCurso_fechaInicio.getValue(),
+                        asignacionCurso_duracion.getText(),
+                        asignacionCurso_lugarImpartido.getText());
+            }else return;
+        
+        limpiarAsignaciones();
+        mostrarTablaAsignaciones();        
+    }
+    
+    public void listaAsignacionesComboBox(){        
+        AsignacionCursosController asignacionCursosController = new AsignacionCursosController();
+        ObservableList obList = FXCollections.observableArrayList(asignacionCursosController.listarAsignacionesComboBox());
+        expediente_curso.setItems(obList);
+    }
+    
+    public void mostrarTablaAsignaciones(){
+    
+        this.asignacionCursosController = new AsignacionCursosController();
+        
+        ObservableList<AsignacionCursos> listar = asignacionCursosController.listar();
+        
+        tabla_asignacionCurso_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tabla_asignacionCurso_curso.setCellValueFactory(new PropertyValueFactory<>("curso"));
+        tabla_asignacionCurso_instructor.setCellValueFactory(new PropertyValueFactory<>("instructor"));
+        tabla_asignacionCurso_institucion.setCellValueFactory(new PropertyValueFactory<>("institucion"));
+        tabla_asignacionCurso_inicio.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
+        tabla_asignacionCurso_horas.setCellValueFactory(new PropertyValueFactory<>("duracion"));
+        tabla_asignacionCurso_lugar.setCellValueFactory(new PropertyValueFactory<>("lugarImpartido"));
+        
+        tabla_asignacionCurso.setItems(listar);  
+        
+        FilteredList<AsignacionCursos> filtroAsignaciones = new FilteredList<>(listar, e -> true);
+        
+        buscar_asignacionCurso.textProperty().addListener((Observable, oldValue, newValue) -> {
+                
+            filtroAsignaciones.setPredicate(Asignaciones ->{
+            
+                if(newValue == null || newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }
+                
+                String buscar = newValue.toLowerCase();
+                
+                if(Asignaciones.getCurso().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Asignaciones.getInstructor().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Asignaciones.getInstitucion().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Asignaciones.getFechaInicio().toString().contains(buscar)){
+                    return true;
+                }else if(Asignaciones.getDuracion().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Asignaciones.getLugarImpartido().toLowerCase().contains(buscar)){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+        
+        });
+        
+        SortedList<AsignacionCursos> listaFiltrada = new SortedList<>(filtroAsignaciones);
+        listaFiltrada.comparatorProperty().bind(tabla_asignacionCurso.comparatorProperty());
+        tabla_asignacionCurso.setItems(listaFiltrada);
+    }
+        
+
+//-----------------FINAL DE LOS METODOS DE ASIGNACIÓN DE CURSOS-------------------------------------//        
+
 //----------------INICIO DE LOS METODOS DE LA SECCIÓN INSTRUCTORES----------------------------------//
         
     public void limpiarInstructores(){
@@ -616,14 +808,14 @@ public class PrincipalController implements Initializable{
         int num = tabla_instructores.getSelectionModel().getSelectedIndex();
         
         if((num-1)<-1) return;
-        
+       
         instructores_id.setText(String.valueOf(instructores.getId()));
         instructores_nombre.setText(instructores.getNombre());
         instructores_dni.setText(instructores.getDni());
         instructores_email.setText(instructores.getEmail());
         instructores_teléfono.setText(instructores.getTelefono());
         instructores_sexo.getSelectionModel().select(instructores.getSexo());
-        instructores_base.getSelectionModel().select(instructores.getBase()-1);
+        instructores_base.getSelectionModel().select(instructores.getBase());
     }
     
     public void agregarInstructor(){
@@ -650,7 +842,7 @@ public class PrincipalController implements Initializable{
         }else{
             instructoresController.guardar( new Instructores(instructores_nombre.getText(),instructores_dni.getText(),
                     instructores_email.getText(),instructores_teléfono.getText(), instructores_sexo.getSelectionModel().getSelectedItem(),
-                    (int)instructores_base.getSelectionModel().getSelectedItem()));
+                    instructores_base.getSelectionModel().getSelectedItem()));
 
             limpiarInstructores();
             mostrarTablaInstructores();            
@@ -700,7 +892,7 @@ public class PrincipalController implements Initializable{
             if(opcion.get().equals(confirmar)){                
                 instructoresController.modificar(instructores.getId(), instructores_nombre.getText(), instructores_dni.getText(),
                         instructores_email.getText(), instructores_teléfono.getText(),(String)instructores_sexo.getSelectionModel().getSelectedItem(),
-                        (Integer)instructores_base.getSelectionModel().getSelectedItem());
+                        instructores_base.getSelectionModel().getSelectedItem().toString());
             }else return;
         
         limpiarInstructores();
@@ -711,7 +903,7 @@ public class PrincipalController implements Initializable{
         
         InstructoresController instructoresController = new InstructoresController(); 
         ObservableList obList = FXCollections.observableArrayList(instructoresController.listarInstructoresComboBox());    
-        asignaciónCurso_instructor.setItems(obList);
+        asignacionCurso_instructor.setItems(obList);
     }
     
     public void mostrarTablaInstructores(){
@@ -728,12 +920,46 @@ public class PrincipalController implements Initializable{
         tabla_instructores_sexo.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         tabla_instructores_base.setCellValueFactory(new PropertyValueFactory<>("base"));
         
-        tabla_instructores.setItems(listar);        
+        tabla_instructores.setItems(listar);  
+        
+        FilteredList<Instructores> filtroInstructores = new FilteredList<>(listar, e -> true);
+        
+        buscar_instructores.textProperty().addListener((Observable, oldValue, newValue) -> {
+                
+            filtroInstructores.setPredicate(Instructores ->{
+            
+                if(newValue == null || newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }
+                
+                String buscar = newValue.toLowerCase();
+                
+                if(Instructores.getNombre().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Instructores.getDni().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Instructores.getEmail().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Instructores.getTelefono().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Instructores.getSexo().toLowerCase().contains(buscar)){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+        
+        });
+        
+        SortedList<Instructores> listaFiltrada = new SortedList<>(filtroInstructores);
+        listaFiltrada.comparatorProperty().bind(tabla_instructores.comparatorProperty());
+        tabla_instructores.setItems(listaFiltrada);
     }
         
 //----------------FINAL DE LOS METODOS DE LA SECCIÓN INSTRUCTORES----------------------------------//
     
 //----------------INICIO DE LOS METODOS DE LA SECCIÓN ALUMNOS----------------------------------//
+    
     public void listarAlumnosCapacitados(){
         this.alumnosController = new AlumnosController();
         inicio_contadorTotal.setText(String.valueOf(alumnosController.ContarAlumnosCapacitados()));
@@ -868,7 +1094,42 @@ public class PrincipalController implements Initializable{
         tabla_alumnos_direccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         tabla_alumnos_sexo.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         
-        tabla_alumnos.setItems(listar);        
+        tabla_alumnos.setItems(listar);
+
+        FilteredList<Alumnos> filtroAlumnos = new FilteredList<>(listar, e -> true);
+        
+        buscar_alumnos.textProperty().addListener((Observable, oldValue, newValue) -> {
+                
+            filtroAlumnos.setPredicate(Alumnos ->{
+            
+                if(newValue == null || newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }
+                
+                String buscar = newValue.toLowerCase();
+                
+                if(Alumnos.getNombre().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Alumnos.getDni().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Alumnos.getEmail().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Alumnos.getDireccion().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Alumnos.getTelefono().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Alumnos.getSexo().toLowerCase().contains(buscar)){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+        
+        });
+        
+        SortedList<Alumnos> listaFiltrada = new SortedList<>(filtroAlumnos);
+        listaFiltrada.comparatorProperty().bind(tabla_alumnos.comparatorProperty());
+        tabla_alumnos.setItems(listaFiltrada);
     }
         
 //----------------FINAL DE LOS METODOS DE LA SECCIÓN ALUMNOS----------------------------------//
@@ -964,7 +1225,7 @@ public class PrincipalController implements Initializable{
         
         InstitucionesController institucionesController = new InstitucionesController(); 
         ObservableList obList = FXCollections.observableArrayList(institucionesController.listarInstitucionesComboBox());
-        asignaciónCurso_institución.setItems(obList);
+        asignacionCurso_institucion.setItems(obList);
     }
     
     public void mostrarTablaInstituciones(){
@@ -978,6 +1239,30 @@ public class PrincipalController implements Initializable{
                 
         tabla_instituciones.setItems(listar);
         
+        FilteredList<Instituciones> filtroInstituciones = new FilteredList<>(listar, e -> true);
+        
+        buscar_instituciones.textProperty().addListener((Observable, oldValue, newValue) -> {
+                
+            filtroInstituciones.setPredicate(Instituciones ->{
+            
+                if(newValue == null || newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }
+                
+                String buscar = newValue.toLowerCase();
+                
+                if(Instituciones.getNombre().toLowerCase().contains(buscar)){
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+        
+        });
+        
+        SortedList<Instituciones> listaFiltrada = new SortedList<>(filtroInstituciones);
+        listaFiltrada.comparatorProperty().bind(tabla_instituciones.comparatorProperty());
+        tabla_instituciones.setItems(listaFiltrada);
     }
     
 //-----------------FINAL DE LOS METODOS DE LA SECCIÓN INSTITUCIONES----------------------------------//
@@ -1089,8 +1374,35 @@ public class PrincipalController implements Initializable{
         tabla_bases_código.setCellValueFactory(new PropertyValueFactory<>("codigo"));
                 
         tabla_bases.setItems(listar);
+
+        FilteredList<Bases> filtroBases = new FilteredList<>(listar, e -> true);
         
+        buscar_bases.textProperty().addListener((Observable, oldValue, newValue) -> {
+                
+            filtroBases.setPredicate(Bases->{
+            
+                if(newValue == null || newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }
+                
+                String buscar = newValue.toLowerCase();
+                
+                if(Bases.getUbicacion().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Bases.getCodigo().toLowerCase().contains(buscar)){
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+        
+        });
+        
+        SortedList<Bases> listaFiltrada = new SortedList<>(filtroBases);
+        listaFiltrada.comparatorProperty().bind(tabla_bases.comparatorProperty());
+        tabla_bases.setItems(listaFiltrada);
     }        
+    
 //---------------------FINAL DE LOS METODOS DE LA SECCIÓN BASES-----------------------------------------//
     
 //---------------------INICIO DE LOS METODOS DE LA SECCIÓN CURSOS-------------------------------------//
@@ -1099,7 +1411,7 @@ public class PrincipalController implements Initializable{
         cursos_id.setText("");
         cursos_nombre.setText("");
     }
-    
+        
     public void SeleccionarCurso(){
     
         Cursos cursos = tabla_cursos.getSelectionModel().getSelectedItem();
@@ -1180,12 +1492,10 @@ public class PrincipalController implements Initializable{
         mostrarTablaCursos();        
     }
     
-    public void listaCursosComboBox(){
-        
-        CursosController cursosController = new CursosController(); 
+    public void listaCursosComboBox(){        
+        CursosController cursosController = new CursosController();
         ObservableList obList = FXCollections.observableArrayList(cursosController.listarCursoComboBox());
-        asignaciónCurso_curso.setItems(obList);
-        expediente_curso.setItems(obList);
+        asignacionCurso_curso.setItems(obList);
     }
     
     public void mostrarTablaCursos(){
@@ -1198,12 +1508,39 @@ public class PrincipalController implements Initializable{
         tabla_cursos_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
                 
         tabla_cursos.setItems(listar);
+        //--------------------------------------------------
+        FilteredList<Cursos> filtroCurso = new FilteredList<>(listar, b -> true);
+        
+        buscar_cursos.textProperty().addListener((observable, oldValue, newValue) -> {
+                
+            filtroCurso.setPredicate(Cursos -> {
+            
+                if(newValue == null || newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }                
+                String buscar = newValue.toLowerCase();
+                
+                if(Cursos.getNombre().toLowerCase().contains(buscar)){
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+        
+        });
+        
+        SortedList<Cursos> listaFiltrada = new SortedList<>(filtroCurso);
+        listaFiltrada.comparatorProperty().bind(tabla_cursos.comparatorProperty());
+        tabla_cursos.setItems(listaFiltrada);
         
     }
         
 //---------------------FINAL DE LOS METODOS DE LA SECCIÓN CURSOS-----------------------------------------//
     
 //---------------------INICIO DE METODOS DE LA SECCIÓN USUARIOS------------------------------------------//
+    public void mostrarNombreUsuario(){       
+        etiqueta_usuario.setText(LoginController.nombreUsuario);        
+    }    
     
     public void limpiarUsuarios(){        
         usuarios_usuario.setText("");
@@ -1221,6 +1558,7 @@ public class PrincipalController implements Initializable{
         Usuarios_contraseña.setText(usuarios.getContraseña());
     }
     
+
     public void agregarUsuario(){
         
         if(usuarios_usuario.getText().isBlank() || Usuarios_contraseña.getText().isBlank()){
@@ -1302,6 +1640,33 @@ public class PrincipalController implements Initializable{
         
         tabla_usuarios.setItems(listar);
         
+        FilteredList<Usuarios> filtroUsuario = new FilteredList<>(listar, e -> true);
+        
+        buscar_usuarios.textProperty().addListener((Observable, oldValue, newValue) -> {
+                
+            filtroUsuario.setPredicate(Usuarios->{
+            
+                if(newValue == null || newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }
+                
+                String buscar = newValue.toLowerCase();
+                
+                if(Usuarios.getUsuario().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Usuarios.getContraseña().toLowerCase().contains(buscar)){
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+        
+        });
+        
+        SortedList<Usuarios> listaFiltrada = new SortedList<>(filtroUsuario);
+        listaFiltrada.comparatorProperty().bind(tabla_usuarios.comparatorProperty());
+        tabla_usuarios.setItems(listaFiltrada);
+        
     }
     
 //------------------------------FINAL METODOS DE LA SECCIÓN USUARIOS-----------------------------------------//    
@@ -1381,6 +1746,7 @@ public class PrincipalController implements Initializable{
             
             listarAlumnosCapacitados();
             
+            
         }else if(cambio.getSource() == btn_alumnos){
             formulario_inicio.setVisible(false);
             formulario_alumnos.setVisible(true);
@@ -1429,7 +1795,7 @@ public class PrincipalController implements Initializable{
             btn_asignaciónCursos.setStyle("-fx-background-color: transparent");
             btn_usuarios.setStyle("-fx-background-color: transparent");
             
-            limpiarCursos();
+            limpiarCursos();          
             mostrarTablaCursos();
             
         }else if(cambio.getSource() == btn_bases){
@@ -1504,7 +1870,7 @@ public class PrincipalController implements Initializable{
             btn_asignaciónCursos.setStyle("-fx-background-color: transparent");
             btn_usuarios.setStyle("-fx-background-color: transparent");
             
-            listaCursosComboBox();
+            listaAsignacionesComboBox();
             listaAlumnosComboBox();
             listaInstitucionesComboBox();
             
@@ -1557,9 +1923,11 @@ public class PrincipalController implements Initializable{
             btn_asignaciónCursos.setStyle("-fx-background-color: linear-gradient(to bottom right, #339434, #33cc33)");
             btn_usuarios.setStyle("-fx-background-color: transparent");
             
+            limpiarAsignaciones();
             listaCursosComboBox();
             listaInstructoresComboBox();
             listaInstitucionesComboBox();
+            mostrarTablaAsignaciones();
             
         }else if(cambio.getSource() == btn_usuarios){
             formulario_inicio.setVisible(false);
@@ -1582,9 +1950,10 @@ public class PrincipalController implements Initializable{
             btn_instructores.setStyle("-fx-background-color: transparent");
             btn_asignaciónCursos.setStyle("-fx-background-color: transparent");
             btn_usuarios.setStyle("-fx-background-color: linear-gradient(to bottom right, #339434, #33cc33)");
-            
-            mostrarTablaUsuarios();
+          
             limpiarUsuarios();
+            mostrarTablaUsuarios();
+            
             
         }else if(cambio.getSource() == btn_detalle_asignaciónCurso){
             formulario_inicio.setVisible(false);
@@ -1612,17 +1981,21 @@ public class PrincipalController implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        listaAsignacionesComboBox();
         listaBasesComboBox();
         listaGeneroComboBox();
         listaCursosComboBox();
         listaAlumnosComboBox();
         listarAlumnosCapacitados();
+        mostrarNombreUsuario();
         mostrarTablaAlumnos();
         mostrarTablaUsuarios();
         mostrarTablaCursos();
         mostrarTablaBases();
         mostrarTablaInstituciones();
         mostrarTablaInstructores();
+        mostrarTablaAsignaciones();
 
     }
 

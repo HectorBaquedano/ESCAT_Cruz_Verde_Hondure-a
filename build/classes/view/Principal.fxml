@@ -176,7 +176,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="formulario_inicio" layoutX="78.0" layoutY="151.0" prefHeight="554.4" prefWidth="879.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="formulario_inicio" layoutX="78.0" layoutY="151.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="554.4" prefWidth="879.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="530.0" prefWidth="854.0" stylesheets="@DiseñoPrincipal.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                  <styleClass>
@@ -477,17 +477,17 @@
                                  <children>
                                     <AnchorPane layoutY="185.0" prefHeight="353.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
                                        <children>
-                                          <TextField fx:id="buscar_asignaciónCurso" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
+                                          <TextField fx:id="buscar_asignacionCurso" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
                                           <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
-                                          <TableView fx:id="tabla_asignaciónCurso" layoutX="13.0" layoutY="58.0" prefHeight="285.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                          <TableView fx:id="tabla_asignacionCurso" layoutX="13.0" layoutY="58.0" onMouseClicked="#SeleccionarAsignacion" prefHeight="285.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
                                              <columns>
-                                                <TableColumn fx:id="tabla_asignaciónCurso_id" prefWidth="45.0" style="-fx-background-color: transparent;" text="ID" />
-                                                <TableColumn fx:id="tabla_asignaciónCurso_curso" prefWidth="190.39997100830078" style="-fx-background-color: transparent;" text="Curso" />
-                                                <TableColumn fx:id="tabla_asignaciónCurso_instructor" prefWidth="188.00009155273438" style="-fx-background-color: transparent;" text="Instructor" />
-                                                <TableColumn fx:id="tabla_asignaciónCurso_institución" prefWidth="164.79995727539062" style="-fx-background-color: transparent;" text="Institución" />
-                                                <TableColumn fx:id="tabla_asignaciónCurso_inicio" prefWidth="82.39990234375" style="-fx-background-color: transparent;" text="Inicio" />
-                                                <TableColumn fx:id="tabla_asignaciónCurso_horas" prefWidth="78.400146484375" style="-fx-size: 40px; -fx-background-color: transparent;" text="Horas" />
-                                                <TableColumn fx:id="tabla_asignaciónCurso_lugar" prefWidth="80.800048828125" style="-fx-size: 40px; -fx-background-color: transparent;" text="Lugar" />
+                                                <TableColumn fx:id="tabla_asignacionCurso_id" prefWidth="45.0" style="-fx-background-color: transparent;" text="ID" />
+                                                <TableColumn fx:id="tabla_asignacionCurso_curso" prefWidth="190.39997100830078" style="-fx-background-color: transparent;" text="Curso" />
+                                                <TableColumn fx:id="tabla_asignacionCurso_instructor" prefWidth="188.00009155273438" style="-fx-background-color: transparent;" text="Instructor" />
+                                                <TableColumn fx:id="tabla_asignacionCurso_institucion" prefWidth="164.79995727539062" style="-fx-background-color: transparent;" text="Institución" />
+                                                <TableColumn fx:id="tabla_asignacionCurso_inicio" prefWidth="82.39990234375" style="-fx-background-color: transparent;" text="Inicio" />
+                                                <TableColumn fx:id="tabla_asignacionCurso_horas" prefWidth="78.400146484375" style="-fx-size: 40px; -fx-background-color: transparent;" text="Horas" />
+                                                <TableColumn fx:id="tabla_asignacionCurso_lugar" prefWidth="80.800048828125" style="-fx-size: 40px; -fx-background-color: transparent;" text="Lugar" />
                                              </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -515,37 +515,37 @@
                                           <Font name="Tahoma" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="asignaciónCurso_duración" layoutX="522.0" layoutY="51.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
-                                    <ComboBox fx:id="asignaciónCurso_instructor" layoutX="130.0" layoutY="52.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
-                                    <Button fx:id="btn_agregar_asignaciónCurso" layoutX="501.0" layoutY="133.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
-                                    <Button fx:id="btn_modificar_asignaciónCurso" layoutX="581.0" layoutY="133.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
-                                    <Button fx:id="btn_eliminar_asignaciónCurso" layoutX="689.0" layoutY="133.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
-                                    <Button fx:id="btn_limpiar_asignaciónCurso" layoutX="769.0" layoutY="133.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                    <TextField fx:id="asignacionCurso_duracion" layoutX="522.0" layoutY="51.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <ComboBox fx:id="asignacionCurso_instructor" layoutX="130.0" layoutY="52.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <Button fx:id="btn_agregar_asignaciónCurso" layoutX="501.0" layoutY="133.0" mnemonicParsing="false" onAction="#agregarAsignacion" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                    <Button fx:id="btn_modificar_asignaciónCurso" layoutX="581.0" layoutY="133.0" mnemonicParsing="false" onAction="#modificarAsignacionCurso" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                    <Button fx:id="btn_eliminar_asignaciónCurso" layoutX="689.0" layoutY="133.0" mnemonicParsing="false" onAction="#eliminarAsignacion" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                    <Button fx:id="btn_limpiar_asignaciónCurso" layoutX="769.0" layoutY="133.0" mnemonicParsing="false" onAction="#limpiarAsignaciones" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
                                     <Label layoutX="694.0" layoutY="20.0" text="ID:">
                                        <font>
                                           <Font name="Tahoma" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="asignaciónCurso_id" editable="false" layoutX="724.0" layoutY="15.0" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <TextField fx:id="asignacionCurso_id" editable="false" layoutX="724.0" layoutY="15.0" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to bottom, #efefef, #eee);; -fx-border-width: .8px;" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
                                     <Label layoutX="54.0" layoutY="56.0" text="Instructor:">
                                        <font>
                                           <Font name="Tahoma" size="14.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="asignaciónCurso_institución" layoutX="130.0" layoutY="91.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <ComboBox fx:id="asignacionCurso_institucion" layoutX="130.0" layoutY="91.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
                                     <Label layoutX="49.0" layoutY="95.0" text="Institución:">
                                        <font>
                                           <Font name="Tahoma" size="14.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="asignaciónCurso_curso" layoutX="130.0" layoutY="16.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
-                                    <DatePicker fx:id="asignaciónCurso_fechaInicio" layoutX="522.0" layoutY="14.0" prefHeight="26.0" prefWidth="145.0" promptText="*Obligatorio" stylesheets="@DiseñoPrincipal.css" />
+                                    <ComboBox fx:id="asignacionCurso_curso" layoutX="130.0" layoutY="16.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <DatePicker fx:id="asignacionCurso_fechaInicio" layoutX="522.0" layoutY="14.0" prefHeight="26.0" prefWidth="145.0" promptText="*Obligatorio" stylesheets="@DiseñoPrincipal.css" />
                                     <Label layoutX="407.0" layoutY="95.0" text="Lugar Impartido:">
                                        <font>
                                           <Font name="Tahoma" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="asignaciónCurso_lugarImpartido" layoutX="522.0" layoutY="91.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
+                                    <TextField fx:id="asignacionCurso_lugarImpartido" layoutX="522.0" layoutY="91.0" prefHeight="25.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
                                  </children>
                               </AnchorPane>
                            </children>

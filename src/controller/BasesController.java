@@ -40,7 +40,7 @@ public class BasesController {
         return basesDao.listar();
     }
     
-    public ArrayList<Integer> listarBasesComboBox(){
+    public ArrayList<String> listarBasesComboBox(){
         return basesDao.listarBasesComboBox();
     }
     public boolean verificar(String ubicacion){

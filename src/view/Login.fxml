@@ -41,12 +41,12 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUsuario" alignment="CENTER" layoutX="44.0" layoutY="183.0" onKeyTyped="#eventKey" prefHeight="30.0" prefWidth="220.0" promptText="Ingrese su Usuario" styleClass="campoTexto" stylesheets="@DiseñoLogin.css">
+                  <TextField fx:id="txtUsuario" alignment="CENTER" layoutX="44.0" layoutY="183.0" onKeyPressed="#validarEspacio" prefHeight="30.0" prefWidth="220.0" promptText="Ingrese su Usuario" styleClass="campoTexto" stylesheets="@DiseñoLogin.css">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </TextField>
-                  <PasswordField fx:id="txtPassword" alignment="CENTER" layoutX="44.0" layoutY="252.0" onKeyTyped="#eventKey" prefHeight="30.0" prefWidth="220.0" promptText="Ingrese su Contraseña" styleClass="campoTexto" stylesheets="@DiseñoLogin.css">
+                  <PasswordField fx:id="txtPassword" alignment="CENTER" layoutX="44.0" layoutY="252.0" onKeyPressed="#validarEspacio" prefHeight="30.0" prefWidth="220.0" promptText="Ingrese su Contraseña" styleClass="campoTexto" stylesheets="@DiseñoLogin.css">
                      <font>
                         <Font size="16.0" />
                      </font>

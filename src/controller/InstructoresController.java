@@ -16,7 +16,7 @@ import model.Instructores;
  */
 public class InstructoresController {
     
-    private InstructoresDao instructoresDao;
+    private final InstructoresDao instructoresDao;
     
     public InstructoresController(){
     
@@ -28,8 +28,8 @@ public class InstructoresController {
         this.instructoresDao.guardar(instructores);
     }
     
-    public int modificar(int id, String nombre, String dni, String email, String telefono, String sexo, int idBase){
-        return instructoresDao.modificar(id, nombre, dni, email, telefono, sexo, idBase);
+    public int modificar(int id, String nombre, String dni, String email, String telefono, String sexo, String base){
+        return instructoresDao.modificar(id, nombre, dni, email, telefono, sexo, base);
     }
     
     public int eliminar(int id){
