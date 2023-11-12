@@ -12,22 +12,22 @@ public class Expedientes {
     
     private int id;
     
-    private String alumno;
+    private String nombre;
     
-    private String fechaInicio;
+    private int idAsignacion;
     
     private String certificado;
 
-    public Expedientes(int id, String alumno, String fechaInicio, String certificado) {
+    public Expedientes(int id, String nombre, int idAsignacion, String certificado) {
         this.id = id;
-        this.alumno = alumno;
-        this.fechaInicio = fechaInicio;
+        this.nombre = nombre;
+        this.idAsignacion = idAsignacion;
         this.certificado = certificado;
     }
 
-    public Expedientes(String alumno, String fechaInicio, String certificado) {
-        this.alumno = alumno;
-        this.fechaInicio = fechaInicio;
+    public Expedientes(String nombre, int idAsignacion, String certificado) {
+        this.nombre = nombre;
+        this.idAsignacion = idAsignacion;
         this.certificado = certificado;
     }
 
@@ -35,12 +35,12 @@ public class Expedientes {
         return id;
     }
 
-    public String getAlumno() {
-        return alumno;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getFechaInicio() {
-        return fechaInicio;
+    public int getIdAsignacion() {
+        return idAsignacion;
     }
 
     public String getCertificado() {
@@ -51,12 +51,12 @@ public class Expedientes {
         this.id = id;
     }
 
-    public void setAlumno(String alumno) {
-        this.alumno = alumno;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setIdAsignacion(int idAsignacion) {
+        this.idAsignacion = idAsignacion;
     }
 
     public void setCertificado(String certificado) {

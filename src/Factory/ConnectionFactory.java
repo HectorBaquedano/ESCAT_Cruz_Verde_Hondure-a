@@ -23,7 +23,7 @@ public class ConnectionFactory {
         comboPooledDataSource.setJdbcUrl("jdbc:mysql://localhost/escat_cvh?useTimeZone=true&serverTimeZone=UTC");
         comboPooledDataSource.setUser("root");
         comboPooledDataSource.setPassword("stratovarius");
-        comboPooledDataSource.setMaxPoolSize(5);
+        comboPooledDataSource.setMaxPoolSize(10);
         
         this.dataSource = comboPooledDataSource;
     }

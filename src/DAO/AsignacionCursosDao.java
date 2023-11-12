@@ -100,7 +100,7 @@ public class AsignacionCursosDao {
 
         try {
             final PreparedStatement statement = con
-                    .prepareStatement("SELECT fechaInicio FROM asignacion_cursos");
+                    .prepareStatement("SELECT id FROM asignacion_cursos");
     
             try (statement) {
                 statement.execute();
@@ -109,7 +109,7 @@ public class AsignacionCursosDao {
     
                 try (resultSet) {
                     while (resultSet.next()) {
-                        resultado.add(resultSet.getString("fechaInicio"));
+                        resultado.add(resultSet.getString("id"));
                     }
                 }
             }

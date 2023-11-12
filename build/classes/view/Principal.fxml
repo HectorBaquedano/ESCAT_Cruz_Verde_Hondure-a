@@ -562,7 +562,7 @@
                                        <children>
                                           <TextField fx:id="buscar_expediente" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" styleClass="buscar" stylesheets="@DiseñoPrincipal.css" />
                                           <FontAwesomeIconView fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
-                                          <TableView fx:id="tabla_expediente" layoutX="13.0" layoutY="58.0" prefHeight="318.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
+                                          <TableView fx:id="tabla_expediente" layoutX="13.0" layoutY="58.0" onMouseClicked="#SeleccionarExpediente" prefHeight="318.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
                                              <columns>
                                                 <TableColumn fx:id="tabla_expediente_id" prefWidth="45.0" style="-fx-background-color: transparent; -fx-size: 35px;" text="ID" />
                                                 <TableColumn fx:id="tabla_expediente_nombre" prefWidth="259.1999282836914" style="-fx-background-color: transparent;" text="Nombre" />
@@ -597,10 +597,10 @@
                                     </Label>
                                     <TextField fx:id="expediente_certificado" layoutX="130.0" layoutY="51.0" prefHeight="26.0" prefWidth="246.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
                                     <ComboBox fx:id="expediente_nombreAlumno" layoutX="130.0" layoutY="13.0" prefHeight="26.0" prefWidth="245.0" promptText="Seleccione - *Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
-                                    <Button fx:id="btn_agregar_expediente" layoutX="498.0" layoutY="99.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
-                                    <Button fx:id="btn_modificar_expediente" layoutX="578.0" layoutY="99.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
-                                    <Button fx:id="btn_eliminar_expediente" layoutX="686.0" layoutY="99.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
-                                    <Button fx:id="btn_limpiar_expediente" layoutX="766.0" layoutY="99.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
+                                    <Button fx:id="btn_agregar_expediente" layoutX="498.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#agregarExpediente" prefHeight="35.0" styleClass="btnAgregar" stylesheets="@DiseñoPrincipal.css" text="Agregar" />
+                                    <Button fx:id="btn_modificar_expediente" layoutX="578.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#modificarExpediente" prefHeight="35.0" styleClass="btnModificar" stylesheets="@DiseñoPrincipal.css" text="Modificar" />
+                                    <Button fx:id="btn_eliminar_expediente" layoutX="686.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#eliminarExpediente" prefHeight="35.0" styleClass="btnEliminar" stylesheets="@DiseñoPrincipal.css" text="Eliminar" />
+                                    <Button fx:id="btn_limpiar_expediente" layoutX="766.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#limpiarExpedientes" prefHeight="35.0" styleClass="btnLimpiar" stylesheets="@DiseñoPrincipal.css" text="Limpiar" />
                                     <Label layoutX="430.0" layoutY="57.0" text="ID:">
                                        <font>
                                           <Font name="Tahoma" size="14.0" />

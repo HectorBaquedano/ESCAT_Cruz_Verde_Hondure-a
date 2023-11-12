@@ -36,6 +36,9 @@ public class Alumnos {
         this.direccion = direccion;
         this.sexo = sexo;
     }
+
+    public Alumnos() {
+    }
     
     public void setId(int id) {
         this.id = id;

@@ -48,6 +48,7 @@ import model.Alumnos;
 import model.AsignacionCursos;
 import model.Bases;
 import model.Cursos;
+import model.Expedientes;
 import model.Instituciones;
 import model.Instructores;
 import model.Usuarios;
@@ -479,19 +480,19 @@ public class PrincipalController implements Initializable{
     private TableColumn<Cursos, String> tabla_cursos_nombre;
 
     @FXML
-    private TableView<?> tabla_expediente;
+    private TableView<Expedientes> tabla_expediente;
 
     @FXML
-    private TableColumn<?, ?> tabla_expediente_certificado;
+    private TableColumn<Expedientes, String> tabla_expediente_certificado;
 
     @FXML
-    private TableColumn<?, ?> tabla_expediente_curso;
+    private TableColumn<Expedientes, String> tabla_expediente_curso;
 
     @FXML
-    private TableColumn<?, ?> tabla_expediente_id;
+    private TableColumn<Expedientes, String> tabla_expediente_id;
 
     @FXML
-    private TableColumn<?, ?> tabla_expediente_nombre;
+    private TableColumn<Expedientes, String> tabla_expediente_nombre;
 
     @FXML
     private TableColumn<?, ?> tabla_informe_asignaciónCurso_certificado;
@@ -562,8 +563,6 @@ public class PrincipalController implements Initializable{
     @FXML
     public TextField usuarios_usuario;
     
-    //private ObservableList<Usuarios> listaUsuarios;
-    
     private UsuariosController usuariosController;
     
     private UsuariosDao usuariosDao;
@@ -583,6 +582,8 @@ public class PrincipalController implements Initializable{
     private Instructores instructores;
     
     private InstructoresController instructoresController;
+    
+    private ExpedientesController expedientesController;
     
     private Usuarios usuarios;
     
@@ -611,7 +612,152 @@ public class PrincipalController implements Initializable{
         alumnos_sexo.setItems(obList);
         instructores_sexo.setItems(obList);        
     }
+//----------------INICIO DE LOS METODOS DE EXPEDIENTES-------------------------------------//
 
+    public void limpiarExpedientes(){                
+        expediente_nombreAlumno.getSelectionModel().clearSelection();
+        expediente_curso.getSelectionModel().clearSelection();        
+        expediente_certificado.setText("");
+        expediente_id.setText("");
+    }
+    
+    public void SeleccionarExpediente(){
+    
+        Expedientes expedientes = tabla_expediente.getSelectionModel().getSelectedItem();
+        int num = tabla_expediente.getSelectionModel().getSelectedIndex();
+        
+        if((num-1)<-1) return;
+       
+        expediente_nombreAlumno.getSelectionModel().select(expedientes.getNombre());
+        expediente_curso.getSelectionModel().select(expedientes.getIdAsignacion()-1);
+        expediente_certificado.setText(expedientes.getCertificado());
+        expediente_id.setText(String.valueOf(expedientes.getId()));
+    }
+    
+    public void agregarExpediente(){
+        
+        this.expedientesController = new ExpedientesController();
+                
+        if(expediente_nombreAlumno.getItems().isEmpty()|| expediente_curso.getItems().isEmpty()
+                || expediente_certificado.getText().isBlank()){
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Información");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Ninguno de los campos obligatorios pueden estar vacíos");
+            alerta.showAndWait();
+            
+        }else if(expedientesController.verificar(expediente_nombreAlumno.getSelectionModel().getSelectedItem(),
+                expediente_curso.getSelectionModel().getSelectedIndex())){
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Información");
+            alerta.setHeaderText(null);
+            alerta.setContentText("El expediente '"+ expediente_nombreAlumno.getSelectionModel().getSelectedItem()
+                    + "' con asignación numero '" + expediente_curso.getValue()
+                    + "', ya existe!");
+            alerta.showAndWait();
+            
+        }else{
+            expedientesController.guardar( new Expedientes(expediente_nombreAlumno.getSelectionModel().getSelectedItem(),
+                    expediente_curso.getSelectionModel().getSelectedIndex()+1,
+                    expediente_certificado.getText()));
+
+            limpiarExpedientes();
+            mostrarTablaExpedientes();            
+        }       
+    }
+    
+    public void eliminarExpediente(){
+                
+        Expedientes expedientes = tabla_expediente.getSelectionModel().getSelectedItem();
+        int num = tabla_expediente.getSelectionModel().getSelectedIndex();
+        
+        if((num-1)<-1) return;
+        
+            alerta = new Alert(Alert.AlertType.CONFIRMATION);
+            alerta.setTitle("Advertencia!!!");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Está seguro que desea borrar el expediente '"+ expedientes.getId()+ "'?");
+            ButtonType confirmar = new ButtonType("Confirmar");
+            ButtonType cancelar = new ButtonType("Cancelar");
+            alerta.getButtonTypes().setAll(confirmar,cancelar);
+            Optional<ButtonType> opcion = alerta.showAndWait();
+                       
+            if(opcion.get().equals(confirmar)){        
+                expedientesController.eliminar(expedientes.getId());
+            }else return;
+        
+        limpiarExpedientes();
+        mostrarTablaExpedientes();
+    }
+    
+    public void modificarExpediente(){
+                
+        Expedientes expedientes = tabla_expediente.getSelectionModel().getSelectedItem();
+        int num = tabla_expediente.getSelectionModel().getSelectedIndex();
+        
+        if((num-1)<-1) return;
+        
+            alerta = new Alert(Alert.AlertType.CONFIRMATION);
+            alerta.setTitle("Advertencia!!!");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Está seguro que desea modificar el expediente '"+ expedientes.getId()+ "'?");
+            ButtonType confirmar = new ButtonType("Confirmar");
+            ButtonType cancelar = new ButtonType("Cancelar");
+            alerta.getButtonTypes().setAll(confirmar,cancelar);
+            Optional<ButtonType> opcion = alerta.showAndWait();
+                       
+            if(opcion.get().equals(confirmar)){                
+                expedientesController.modificar(expedientes.getId(), 
+                        expediente_nombreAlumno.getSelectionModel().getSelectedItem(),
+                        expediente_curso.getSelectionModel().getSelectedIndex()+1,
+                        expediente_certificado.getText());
+            }else return;
+        
+        limpiarExpedientes();
+        mostrarTablaExpedientes();        
+    }
+    
+    public void mostrarTablaExpedientes(){
+    
+        this.expedientesController = new ExpedientesController();
+        
+        ObservableList<Expedientes> listar = expedientesController.listar();
+        
+        tabla_expediente_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tabla_expediente_nombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        tabla_expediente_curso.setCellValueFactory(new PropertyValueFactory<>("idAsignacion"));
+        tabla_expediente_certificado.setCellValueFactory(new PropertyValueFactory<>("Certificado"));
+        tabla_expediente.setItems(listar);  
+        
+        FilteredList<Expedientes> filtroExpedientes = new FilteredList<>(listar, e -> true);
+        
+        buscar_expediente.textProperty().addListener((Observable, oldValue, newValue) -> {
+                
+            filtroExpedientes.setPredicate(Expedientes ->{
+            
+                if(newValue == null || newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }
+                
+                String buscar = newValue.toLowerCase();
+                
+                if(Expedientes.getNombre().toLowerCase().contains(buscar)){
+                    return true;
+                }else if(Expedientes.getCertificado().toLowerCase().contains(buscar)){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+        
+        });
+        
+        SortedList<Expedientes> listaFiltrada = new SortedList<>(filtroExpedientes);
+        listaFiltrada.comparatorProperty().bind(tabla_expediente.comparatorProperty());
+        tabla_expediente.setItems(listaFiltrada);
+    }
+    
+//----------------FINAL DE LOS METODOS DE EXPEDIENTES-------------------------------------//
     
 //----------------INICIO DE LOS METODOS DE ASIGNACIÓN DE CURSOS-------------------------------------//
         
@@ -622,6 +768,7 @@ public class PrincipalController implements Initializable{
         asignacionCurso_duracion.setText("");
         asignacionCurso_lugarImpartido.setText("");
         asignacionCurso_fechaInicio.setValue(null);
+        asignacionCurso_id.setText("");
     }
     
     public void SeleccionarAsignacion(){
@@ -637,12 +784,12 @@ public class PrincipalController implements Initializable{
         asignacionCurso_fechaInicio.setValue(asignacionCursos.getFechaInicio());
         asignacionCurso_duracion.setText(asignacionCursos.getDuracion());
         asignacionCurso_lugarImpartido.setText(asignacionCursos.getLugarImpartido());
+        asignacionCurso_id.setText(String.valueOf(asignacionCursos.getId()));
     }
     
     public void agregarAsignacion(){
         
         this.asignacionCursosController = new AsignacionCursosController();
-        basesController = new BasesController();
         
         if(asignacionCurso_curso.getItems().isEmpty()|| asignacionCurso_instructor.getItems().isEmpty()
                 || asignacionCurso_institucion.getItems().isEmpty()|| asignacionCurso_fechaInicio.getValue() == null
@@ -650,7 +797,7 @@ public class PrincipalController implements Initializable{
             alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Información");
             alerta.setHeaderText(null);
-            alerta.setContentText("Ninguno de los campos no pueden estar vacíos");
+            alerta.setContentText("Ninguno de los campos obligatorios pueden estar vacíos");
             alerta.showAndWait();
             
         }else if(asignacionCursosController.verificar(asignacionCurso_curso.getSelectionModel().getSelectedItem(),
@@ -821,7 +968,7 @@ public class PrincipalController implements Initializable{
     public void agregarInstructor(){
         
         instructoresController = new InstructoresController();
-        basesController = new BasesController();
+        //basesController = new BasesController();
         
         if(instructores_nombre.getText().isBlank() || instructores_dni.getText().isBlank() 
                 || instructores_teléfono.getText().isBlank() || instructores_base.getItems().isEmpty()
@@ -1870,9 +2017,10 @@ public class PrincipalController implements Initializable{
             btn_asignaciónCursos.setStyle("-fx-background-color: transparent");
             btn_usuarios.setStyle("-fx-background-color: transparent");
             
+            limpiarExpedientes();
             listaAsignacionesComboBox();
             listaAlumnosComboBox();
-            listaInstitucionesComboBox();
+            mostrarTablaExpedientes();
             
         }else if(cambio.getSource() == btn_instructores){
             formulario_inicio.setVisible(false);
@@ -1996,7 +2144,7 @@ public class PrincipalController implements Initializable{
         mostrarTablaInstituciones();
         mostrarTablaInstructores();
         mostrarTablaAsignaciones();
-
+        mostrarTablaExpedientes();
     }
 
 }

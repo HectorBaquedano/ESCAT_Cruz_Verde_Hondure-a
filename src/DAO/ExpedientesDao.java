@@ -30,12 +30,12 @@ public class ExpedientesDao {
             PreparedStatement statement;
                 statement = con.prepareStatement(
                         "INSERT INTO expedientes "
-                        + "(alumno, fechaInicio, certificado)"
+                        + "(nombre, id_asignacion, certificado)"
                         + " VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
     
             try (statement) {
-                statement.setString(1, expedientes.getAlumno());
-                statement.setString(2, expedientes.getFechaInicio());
+                statement.setString(1, expedientes.getNombre());
+                statement.setInt(2, expedientes.getIdAsignacion());
                 statement.setString(3, expedientes.getCertificado());
     
                 statement.execute();
@@ -58,12 +58,13 @@ public class ExpedientesDao {
         }
     }
 
+        
     public ObservableList<Expedientes> listar() {
         ObservableList<Expedientes> resultado = FXCollections.observableArrayList();
 
         try {
             final PreparedStatement statement = con
-                    .prepareStatement("SELECT id, alumno, fechaInicio, certificado FROM expedientes");
+                    .prepareStatement("SELECT id, nombre, id_asignacion, certificado FROM expedientes");
     
             try (statement) {
                 statement.execute();
@@ -74,8 +75,8 @@ public class ExpedientesDao {
                     while (resultSet.next()) {
                         resultado.add(new Expedientes(
                                 resultSet.getInt("id"),
-                                resultSet.getString("alumno"),
-                                resultSet.getString("fechaInicio"),
+                                resultSet.getString("nombre"),
+                                resultSet.getInt("id_asignacion"),
                                 resultSet.getString("certificado")));
                     }
                 }
@@ -110,20 +111,19 @@ public class ExpedientesDao {
         }
     }
 
-    public int modificar(int id, String alumno, String fechaInicio, String certificado) {
+    public int modificar(int id, String nombre, int idAsignacion, String certificado) {
         try {
             
             final PreparedStatement statement = con.prepareStatement(
                     "UPDATE expedientes SET "
-                    + " alumno = ?, "
-                    + " fechaInicio = ?,"
-                    + " certificado = ?,"
-                    + " fechaInicio = ?"
+                    + " nombre = ?, "
+                    + " id_asignacion = ?,"
+                    + " certificado = ?"
                     + " WHERE id = ?");
 
             try (statement) {
-                statement.setString(1, alumno);
-                statement.setString(2, fechaInicio);
+                statement.setString(1, nombre);
+                statement.setInt(2, idAsignacion);
                 statement.setString(3, certificado);
                 statement.setInt(4, id);
                 statement.execute();
@@ -137,14 +137,14 @@ public class ExpedientesDao {
         }
     }
     
-    public boolean verificarExpediente(String alumno, String fechaInicio) {
+    public boolean verificarExpediente(String nombre, int idAsignacion) {
         try {
             final PreparedStatement statement = con.prepareStatement(
-                    "SELECT * FROM expedientes WHERE BINARY alumno=? AND BINARY fechaInicio = ?" );
+                    "SELECT * FROM expedientes WHERE BINARY nombre=? AND BINARY id_asignacion = ?" );
 
             try (statement) {
-                statement.setString(1, alumno);
-                statement.setString(2, fechaInicio);
+                statement.setString(1, nombre);
+                statement.setInt(2, idAsignacion);
                 statement.execute();
 
                 ResultSet resultSet = statement.executeQuery();
