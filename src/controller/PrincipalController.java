@@ -4,18 +4,22 @@
  */
 package controller;
 
+import DAO.AlumnosDao;
 import DAO.UsuariosDao;
 import Factory.ConnectionFactory;
+import static com.mysql.cj.util.SaslPrep.prepare;
+import com.mysql.cj.xdevapi.Result;
+import com.mysql.jdbc.Statement;
 import java.net.URL;
-import java.sql.SQLException;
 import java.sql.Connection;
-import java.time.format.DateTimeFormatter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -28,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -43,15 +48,25 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.StringConverter;
+import static javax.management.remote.JMXConnectorFactory.connect;
 import model.Alumnos;
 import model.AsignacionCursos;
 import model.Bases;
 import model.Cursos;
 import model.Expedientes;
+import model.FormateadorTexto;
+import static model.FormateadorTexto.DniFormatter;
 import model.Instituciones;
 import model.Instructores;
 import model.Usuarios;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 
 /**
  *
@@ -186,19 +201,19 @@ public class PrincipalController implements Initializable{
     private Button btn_expediente;
 
     @FXML
-    private Button btn_imprimir_alumnos;
+    private Button btn_informe_alumnos;
 
     @FXML
-    private Button btn_imprimir_detalle_asignaciónCurso;
+    private Button btn_detalle_asignacionCurso;
 
     @FXML
-    private Button btn_imprimir_expediente;
+    private Button btn_informe_expediente;
 
     @FXML
-    private Button btn_imprimir_instituciones;
+    private Button btn_informe_instituciones;
 
     @FXML
-    private Button btn_imprimir_instructores;
+    private Button btn_informe_instructores;
 
     @FXML
     private Button btn_inicio;
@@ -378,7 +393,7 @@ public class PrincipalController implements Initializable{
     private LineChart<?, ?> inicio_gráficaMujeres;
 
     @FXML
-    private BarChart<?, ?> inicio_gráficaTotal;
+    public BarChart<?, ?> inicio_gráficaTotal;
 
     @FXML
     private TextField instituciones_id;
@@ -433,9 +448,6 @@ public class PrincipalController implements Initializable{
         
     @FXML
     private TableView<AsignacionCursos> tabla_asignacionCurso;
-
-    @FXML
-    private TableView<?> tabla_asignaciónCurso1;
 
     @FXML
     private TableColumn<AsignacionCursos, String> tabla_asignacionCurso_curso;
@@ -598,9 +610,14 @@ public class PrincipalController implements Initializable{
     private Alert alerta;
             
     private double x = 0;
+    
     private double y = 0;
     
-    private String[] listaSexo = {"Masculino","Femenino"};  
+    private Connection con;
+    
+    private Map<String, Object> map;
+    
+    private String[] listaSexo = {"M","F"};  
     
     public void listaGeneroComboBox(){
         List<String> genero = new ArrayList();
@@ -612,8 +629,46 @@ public class PrincipalController implements Initializable{
         alumnos_sexo.setItems(obList);
         instructores_sexo.setItems(obList);        
     }
+    
+    @FXML
+    private void validarDni(KeyEvent evento) {
+
+    Object evt = evento.getSource();
+        
+        if(evt.equals(alumnos_dni)){
+            
+            alumnos_dni.setTextFormatter(FormateadorTexto.DniFormatter());
+
+        }else if(evt.equals(instructores_dni)){
+
+            instructores_dni.setTextFormatter(FormateadorTexto.DniFormatter());
+
+        }
+    }
+        
+    @FXML
+    private void validarTelefono(KeyEvent evento) {
+
+    Object evt = evento.getSource();
+        
+        if(evt.equals(alumnos_teléfono)){
+
+            FormateadorTexto.TelefonoFormatter(alumnos_teléfono);
+
+        }else if(evt.equals(instructores_teléfono)){
+
+            FormateadorTexto.TelefonoFormatter(instructores_teléfono);
+
+        }
+    }
+        
 //----------------INICIO DE LOS METODOS DE EXPEDIENTES-------------------------------------//
 
+    public void generarCertificado(){
+        String certificado = expedientesController.generarCertificado(expediente_nombreAlumno.getSelectionModel().getSelectedItem(), expediente_curso.getSelectionModel().getSelectedIndex()+1);
+         expediente_certificado.setText(certificado);         
+    }
+    
     public void limpiarExpedientes(){                
         expediente_nombreAlumno.getSelectionModel().clearSelection();
         expediente_curso.getSelectionModel().clearSelection();        
@@ -760,7 +815,27 @@ public class PrincipalController implements Initializable{
 //----------------FINAL DE LOS METODOS DE EXPEDIENTES-------------------------------------//
     
 //----------------INICIO DE LOS METODOS DE ASIGNACIÓN DE CURSOS-------------------------------------//
-        
+    
+     public void ReporteAsignacion(){
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        try{
+            JasperDesign jDesign = JRXmlLoader.load("..\\ESCAT_CVH\\src\\Reportes\\AsignacionReport.jrxml");
+                    
+            JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+            
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
+            
+            JasperViewer viewer = new JasperViewer(jPrint, false);
+            
+            viewer.setTitle("Cursos Impartidos");
+            viewer.setVisible(true);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }    
+    }
+     
     public void limpiarAsignaciones(){                
         asignacionCurso_curso.getSelectionModel().clearSelection();
         asignacionCurso_instructor.getSelectionModel().clearSelection();
@@ -938,7 +1013,26 @@ public class PrincipalController implements Initializable{
 //-----------------FINAL DE LOS METODOS DE ASIGNACIÓN DE CURSOS-------------------------------------//        
 
 //----------------INICIO DE LOS METODOS DE LA SECCIÓN INSTRUCTORES----------------------------------//
-        
+
+    public void ReporteInstructores(){
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        try{
+            JasperDesign jDesign = JRXmlLoader.load("..\\ESCAT_CVH\\src\\Reportes\\InstructoresReport.jrxml");
+                    
+            JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+            
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
+            
+            JasperViewer viewer = new JasperViewer(jPrint, false);
+            
+            viewer.setTitle("Instructores Certificados");
+            viewer.setVisible(true);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }    
+    }        
     public void limpiarInstructores(){
         instructores_id.setText("");
         instructores_nombre.setText("");
@@ -1106,6 +1200,116 @@ public class PrincipalController implements Initializable{
 //----------------FINAL DE LOS METODOS DE LA SECCIÓN INSTRUCTORES----------------------------------//
     
 //----------------INICIO DE LOS METODOS DE LA SECCIÓN ALUMNOS----------------------------------//
+
+    public void ReporteAlumnos(){
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        try{
+            JasperDesign jDesign = JRXmlLoader.load("..\\ESCAT_CVH\\src\\Reportes\\AlumnosReport.jrxml");
+                    
+            JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+            
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
+            
+            JasperViewer viewer = new JasperViewer(jPrint, false);
+            
+            viewer.setTitle("Alumnos Capacitados");
+            viewer.setVisible(true);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }    
+    }
+    
+    public void mostrarGraficoTotal(){
+        
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        
+        inicio_gráficaTotal.getData().clear();
+       try {
+            final PreparedStatement statement = con
+                    .prepareStatement("SELECT fechaInicio, COUNT(sexo) from vista_sexo_por_curso\n" +
+                                        "group by fechaInicio ORDER BY fechaInicio DESC");
+    
+            try (statement) {
+                
+                XYChart.Series chart = new XYChart.Series();
+                statement.execute();
+    
+                final ResultSet resultSet = statement.getResultSet();
+    
+                try (resultSet) {
+                    while (resultSet.next()) {
+                        chart.getData().add(new XYChart.Data(resultSet.getString(1), resultSet.getInt("count(sexo)")));
+                    }
+                }inicio_gráficaTotal.getData().add(chart);
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public void mostrarGraficoMujeres(){
+        
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        
+        inicio_gráficaMujeres.getData().clear();
+       try {
+            final PreparedStatement statement = con
+                    .prepareStatement("SELECT fechaInicio, COUNT(sexo) from vista_sexo_por_curso WHERE sexo = 'F'\n" +
+                                        "group by fechaInicio order by timestamp(fechaInicio) DESC");
+    
+            try (statement) {
+                
+                XYChart.Series chart = new XYChart.Series();
+                statement.execute();
+    
+                final ResultSet resultSet = statement.getResultSet();
+    
+                try (resultSet) {
+                    while (resultSet.next()) {
+                        chart.getData().add(new XYChart.Data(resultSet.getString(1), resultSet.getInt("count(sexo)")));
+                    }
+                }inicio_gráficaMujeres.getData().add(chart);
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public void mostrarGraficoHombres(){
+        
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        
+        inicio_gráficaHombres.getData().clear();
+       try {
+            final PreparedStatement statement = con
+                    .prepareStatement("SELECT fechaInicio, COUNT(sexo) from vista_sexo_por_curso WHERE sexo = 'M' "
+                            + "group by fechaInicio order by timestamp(fechaInicio) DESC");
+    
+            try (statement) {
+                
+                XYChart.Series chart = new XYChart.Series();
+                statement.execute();
+    
+                final ResultSet resultSet = statement.getResultSet();
+    
+                try (resultSet) {
+                    while (resultSet.next()) {
+                        chart.getData().add(new XYChart.Data(resultSet.getString(1), resultSet.getInt("count(sexo)")));
+                    }
+                }inicio_gráficaHombres.getData().add(chart);
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     
     public void listarAlumnosCapacitados(){
         this.alumnosController = new AlumnosController();
@@ -1143,7 +1347,7 @@ public class PrincipalController implements Initializable{
     public void agregarAlumno(){
         
         alumnosController = new AlumnosController();
-        
+                
         if(alumnos_nombre.getText().isBlank() || alumnos_dni.getText().isBlank() 
                 || alumnos_teléfono.getText().isBlank() || alumnos_dirección.getText().isBlank() 
                 || alumnos_sexo.getItems().isEmpty()){
@@ -1892,7 +2096,9 @@ public class PrincipalController implements Initializable{
             btn_usuarios.setStyle("-fx-background-color: transparent");
             
             listarAlumnosCapacitados();
-            
+            mostrarGraficoTotal();
+            mostrarGraficoMujeres();
+            mostrarGraficoHombres();
             
         }else if(cambio.getSource() == btn_alumnos){
             formulario_inicio.setVisible(false);
@@ -2145,6 +2351,9 @@ public class PrincipalController implements Initializable{
         mostrarTablaInstructores();
         mostrarTablaAsignaciones();
         mostrarTablaExpedientes();
+        mostrarGraficoTotal();
+        mostrarGraficoMujeres();
+        mostrarGraficoHombres();
     }
 
 }

@@ -6,6 +6,7 @@ package controller;
 
 import DAO.AlumnosDao;
 import Factory.ConnectionFactory;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import model.Alumnos;
@@ -59,4 +60,5 @@ public class AlumnosController {
     public int ContarHombresCapacitados(){
         return alumnosDao.ContarHombresCapacitadas();
     }
+        
 }

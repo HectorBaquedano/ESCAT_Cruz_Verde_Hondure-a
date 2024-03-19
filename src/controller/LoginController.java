@@ -23,6 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.FormateadorTexto;
 
 /**
  * FXML Controller class
@@ -56,17 +57,11 @@ public class LoginController implements Initializable {
         
             if(evt.equals(txtUsuario)){
 
-                if(evento.getText().equals(" ")){
-                    evento.consume();
-                    System.out.println("espacio");
-                }
+                FormateadorTexto.setupTextField(txtUsuario);
 
             }else if(evt.equals(txtPassword)){
 
-                if(evento.getText().equals(" ")){
-                    evento.consume();
-                    System.out.println("espacio");
-                }            
+                FormateadorTexto.setupTextField(txtPassword);
 
             }
 	}

@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import controller.PrincipalController;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import model.Alumnos;
 
@@ -20,7 +23,8 @@ public class AlumnosDao {
 
     private final Connection con;
     private Alert alerta;
-
+    public PrincipalController principal;
+    
     public AlumnosDao(Connection con) {
         this.con = con;
     }  
@@ -221,7 +225,7 @@ public class AlumnosDao {
         
         try {
             final PreparedStatement statement = con
-                    .prepareStatement("SELECT count(id) FROM alumnos WHERE sexo = 'Femenino'");
+                    .prepareStatement("SELECT count(id) FROM alumnos WHERE sexo = 'F'");
     
             try (statement) {
                 statement.execute();
@@ -246,7 +250,7 @@ public class AlumnosDao {
         
         try {
             final PreparedStatement statement = con
-                    .prepareStatement("SELECT count(id) FROM alumnos WHERE sexo = 'Masculino'");
+                    .prepareStatement("SELECT count(id) FROM alumnos WHERE sexo = 'M'");
     
             try (statement) {
                 statement.execute();
@@ -264,4 +268,5 @@ public class AlumnosDao {
         }
         return resultado;
     }
+    
 }

@@ -42,4 +42,8 @@ public class ExpedientesController {
     public boolean verificar(String nombre, int idAsignacion){
         return expedientesDao.verificarExpediente(nombre, idAsignacion);
     }
+    
+    public String generarCertificado(String nombre, int curso){
+        return expedientesDao.generarCertificado(nombre, curso);
+    }
 }

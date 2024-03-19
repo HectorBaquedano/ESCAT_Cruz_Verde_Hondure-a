@@ -156,4 +156,32 @@ public class ExpedientesDao {
         }
     }
     
+    public String generarCertificado(String nombre, int curso){
+        
+        String resultado = null;
+        try {
+            final PreparedStatement statement = con.prepareStatement(
+                    "select base, año, dni from vista_certificado_expediente where nombre = ? && curso_id = ?" );
+
+             try (statement) {
+                statement.setString(1, nombre);
+                statement.setInt(2, curso);
+                statement.execute();
+
+               final ResultSet resultSet = statement.getResultSet();
+    
+                try (resultSet) {
+                    while (resultSet.next()) {
+                    resultado = resultSet.getString("base") + "-" +
+                                resultSet.getLong("año")+"-"+
+                                resultSet.getString("dni");
+                      
+                    }
+                }               
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }return resultado;
+    } 
+    
 }
