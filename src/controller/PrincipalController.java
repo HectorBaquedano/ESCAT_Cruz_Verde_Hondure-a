@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -215,6 +216,9 @@ public class PrincipalController implements Initializable{
     @FXML
     private Button btn_informe_instructores;
 
+    @FXML
+    private Button btn_informe_cursos;
+    
     @FXML
     private Button btn_inicio;
 
@@ -816,7 +820,7 @@ public class PrincipalController implements Initializable{
     
 //----------------INICIO DE LOS METODOS DE ASIGNACIÓN DE CURSOS-------------------------------------//
     
-     public void ReporteAsignacion(){
+    public void ReporteAsignacion(){
         var factory = new ConnectionFactory();
         con = factory.recuperaConexion();
         try{
@@ -834,6 +838,42 @@ public class PrincipalController implements Initializable{
         }catch(Exception e){
             e.printStackTrace();
         }    
+    }
+    
+    public void DetalleAsignacion(){
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        int num;
+        
+        if(tabla_asignacionCurso.getSelectionModel().isEmpty()){
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Información");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Debe seleccionar una asiganción para ver los detalles");
+            alerta.showAndWait();
+            
+        }else{
+            num = tabla_asignacionCurso.getSelectionModel().getSelectedIndex()+1;
+
+            Map<String, Object> parametro = new HashMap<>();
+            parametro.put("v_asignacion", num);
+
+            try{
+                JasperDesign jDesign = JRXmlLoader.load("..\\ESCAT_CVH\\src\\Reportes\\DetalleAsignacionReport.jrxml");
+
+                JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+
+                JasperPrint jPrint = JasperFillManager.fillReport(jReport, parametro, con);
+
+                JasperViewer viewer = new JasperViewer(jPrint, false);
+
+                viewer.setTitle("Detalle");
+                viewer.setVisible(true);
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }    
+        }
     }
      
     public void limpiarAsignaciones(){                
@@ -1230,7 +1270,7 @@ public class PrincipalController implements Initializable{
        try {
             final PreparedStatement statement = con
                     .prepareStatement("SELECT fechaInicio, COUNT(sexo) from vista_sexo_por_curso\n" +
-                                        "group by fechaInicio ORDER BY fechaInicio DESC");
+                                        "group by fechaInicio ORDER BY timestamp(fechaInicio) ASC LIMIT 5");
     
             try (statement) {
                 
@@ -1244,6 +1284,7 @@ public class PrincipalController implements Initializable{
                         chart.getData().add(new XYChart.Data(resultSet.getString(1), resultSet.getInt("count(sexo)")));
                     }
                 }inicio_gráficaTotal.getData().add(chart);
+    
             }
             
         } catch (SQLException e) {
@@ -1260,7 +1301,7 @@ public class PrincipalController implements Initializable{
        try {
             final PreparedStatement statement = con
                     .prepareStatement("SELECT fechaInicio, COUNT(sexo) from vista_sexo_por_curso WHERE sexo = 'F'\n" +
-                                        "group by fechaInicio order by timestamp(fechaInicio) DESC");
+                                        "group by fechaInicio order by timestamp(fechaInicio) ASC LIMIT 5");
     
             try (statement) {
                 
@@ -1290,7 +1331,7 @@ public class PrincipalController implements Initializable{
        try {
             final PreparedStatement statement = con
                     .prepareStatement("SELECT fechaInicio, COUNT(sexo) from vista_sexo_por_curso WHERE sexo = 'M' "
-                            + "group by fechaInicio order by timestamp(fechaInicio) DESC");
+                            + "group by fechaInicio order by timestamp(fechaInicio) ASC LIMIT 5");
     
             try (statement) {
                 
@@ -1486,6 +1527,26 @@ public class PrincipalController implements Initializable{
 //----------------FINAL DE LOS METODOS DE LA SECCIÓN ALUMNOS----------------------------------//
     
 //----------------INICIO DE LOS METODOS DE LA SECCIÓN INSTITUCIONES----------------------------------//
+    
+    public void ReporteInstituciones(){
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        try{
+            JasperDesign jDesign = JRXmlLoader.load("..\\ESCAT_CVH\\src\\Reportes\\InstitucionesReport.jrxml");
+                    
+            JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+            
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
+            
+            JasperViewer viewer = new JasperViewer(jPrint, false);
+            
+            viewer.setTitle("Instituciones Capacitadas");
+            viewer.setVisible(true);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }    
+    }
     
     public void limpiarInstituciones(){
         instituciones_id.setText("");
@@ -1757,6 +1818,26 @@ public class PrincipalController implements Initializable{
 //---------------------FINAL DE LOS METODOS DE LA SECCIÓN BASES-----------------------------------------//
     
 //---------------------INICIO DE LOS METODOS DE LA SECCIÓN CURSOS-------------------------------------//
+   
+    public void ReporteCursos(){
+        var factory = new ConnectionFactory();
+        con = factory.recuperaConexion();
+        try{
+            JasperDesign jDesign = JRXmlLoader.load("..\\ESCAT_CVH\\src\\Reportes\\CursosReport.jrxml");
+                    
+            JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+            
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
+            
+            JasperViewer viewer = new JasperViewer(jPrint, false);
+            
+            viewer.setTitle("Cursos Disponibles");
+            viewer.setVisible(true);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }    
+    }
     
     public void limpiarCursos(){
         cursos_id.setText("");
@@ -2083,7 +2164,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(false);
 
             btn_inicio.setStyle("-fx-background-color: linear-gradient(to bottom right, #339434, #33cc33)");
             btn_alumnos.setStyle("-fx-background-color: transparent");
@@ -2110,7 +2190,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(false);
             
             btn_inicio.setStyle("-fx-background-color: transparent");
             btn_alumnos.setStyle("-fx-background-color: linear-gradient(to bottom right, #339434, #33cc33)");
@@ -2136,7 +2215,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(false);
             
             btn_inicio.setStyle("-fx-background-color: transparent");
             btn_alumnos.setStyle("-fx-background-color: transparent");
@@ -2161,7 +2239,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(false);
             
             btn_inicio.setStyle("-fx-background-color: transparent");
             btn_alumnos.setStyle("-fx-background-color: transparent");
@@ -2186,7 +2263,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(false);
             
             btn_inicio.setStyle("-fx-background-color: transparent");
             btn_alumnos.setStyle("-fx-background-color: transparent");
@@ -2211,7 +2287,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(false);
             
             btn_inicio.setStyle("-fx-background-color: transparent");
             btn_alumnos.setStyle("-fx-background-color: transparent");
@@ -2238,7 +2313,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(true);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(false);
             
             btn_inicio.setStyle("-fx-background-color: transparent");
             btn_alumnos.setStyle("-fx-background-color: transparent");
@@ -2265,7 +2339,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(true);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(false);
             
             btn_inicio.setStyle("-fx-background-color: transparent");
             btn_alumnos.setStyle("-fx-background-color: transparent");
@@ -2293,7 +2366,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(true);
-            formulario_informe_asignaciónCursos.setVisible(false);
             
             btn_inicio.setStyle("-fx-background-color: transparent");
             btn_alumnos.setStyle("-fx-background-color: transparent");
@@ -2319,7 +2391,6 @@ public class PrincipalController implements Initializable{
             formulario_instructores.setVisible(false);
             formulario_asignaciónCursos.setVisible(false);
             formulario_usuarios.setVisible(false);
-            formulario_informe_asignaciónCursos.setVisible(true);
         }
     }
 

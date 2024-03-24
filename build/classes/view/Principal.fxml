@@ -493,7 +493,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                           </TableView>
-                                          <Button fx:id="btn_detalle_asignacionCurso" layoutX="770.0" layoutY="9.0" mnemonicParsing="false" onAction="#cambiarFormulario" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Detalle" />
+                                          <Button fx:id="btn_detalle_asignacionCurso" layoutX="770.0" layoutY="9.0" mnemonicParsing="false" onAction="#DetalleAsignacion" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Detalle" />
                                           <Button fx:id="btn_informe_asignacion" layoutX="692.0" layoutY="9.0" mnemonicParsing="false" onAction="#ReporteAsignacion" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Informe" />
                                        </children>
                                        <styleClass>
@@ -635,6 +635,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                           </TableView>
+                                          <Button fx:id="btn_informe_cursos" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#ReporteCursos" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Informe" />
                                        </children>
                                        <styleClass>
                                           <String fx:value="fondo-blanco" />
@@ -762,7 +763,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                           </TableView>
-                                          <Button fx:id="btn_informe_instituciones" layoutX="17.0" layoutY="8.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Informe" />
+                                          <Button fx:id="btn_informe_instituciones" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#ReporteInstituciones" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Informe" />
                                        </children>
                                        <styleClass>
                                           <String fx:value="fondo-blanco" />
@@ -858,119 +859,6 @@
                                           <TextField fx:id="Usuarios_contraseña" layoutX="117.0" layoutY="133.0" prefHeight="26.0" prefWidth="200.0" promptText="*Obligatorio" styleClass="campoTexto" stylesheets="@DiseñoPrincipal.css" />
                                        </children>
                                     </AnchorPane>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="formulario_informe_asignaciónCursos" layoutY="1.0" prefHeight="554.4" prefWidth="873.6" visible="false">
-                           <children>
-                              <AnchorPane layoutX="9.0" layoutY="8.0" prefHeight="538.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
-                                 <styleClass>
-                                    <String fx:value="fondo-blanco" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <AnchorPane layoutY="133.0" prefHeight="406.0" prefWidth="855.0" stylesheets="@DiseñoPrincipal.css">
-                                       <children>
-                                          <TableView fx:id="tabla_asignaciónCurso1" layoutX="13.0" layoutY="51.0" prefHeight="348.0" prefWidth="830.0" styleClass="vista-tabla" stylesheets="@DiseñoPrincipal.css">
-                                             <columns>
-                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_id" prefWidth="45.0" style="-fx-background-color: transparent;" text="ID" />
-                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_nombre_alumno" prefWidth="289.5999984741211" style="-fx-background-color: transparent;" text="Nombre del Alumno" />
-                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_dni" prefWidth="184.80001831054688" style="-fx-background-color: transparent;" text="DNI" />
-                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_sexo" prefWidth="96.800048828125" style="-fx-background-color: transparent;" text="Sexo" />
-                                                <TableColumn fx:id="tabla_informe_asignaciónCurso_certificado" prefWidth="196.7999267578125" style="-fx-size: 40px; -fx-background-color: transparent;" text="Certificado" />
-                                             </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                          <Button fx:id="btn_imprimir_detalle_asignaciónCurso" layoutX="770.0" layoutY="9.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btnInforme" stylesheets="@DiseñoPrincipal.css" text="Imprimir" />
-                                          <Label layoutX="9.0" layoutY="14.0" text="ID:">
-                                             <font>
-                                                <Font name="Tahoma" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="informe_etiqueta_id" layoutX="39.0" layoutY="14.0" text="Etiqueta_id">
-                                             <font>
-                                                <Font name="Tahoma" size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <styleClass>
-                                          <String fx:value="fondo-blanco" />
-                                          <String fx:value="shadow" />
-                                       </styleClass>
-                                    </AnchorPane>
-                                    <Label layoutX="459.0" layoutY="20.0" text="Fecha de Inicio:">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="186.0" layoutY="18.0" text="Curso:">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="457.0" layoutY="55.0" text="Duración en Hrs:">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="162.0" layoutY="55.0" text="Instructor:">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="157.0" layoutY="94.0" text="Institución:">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="457.0" layoutY="95.0" text="Lugar Impartido:">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="informe_etiqueta_nombre_curso" layoutX="238.0" layoutY="19.0" text="Etiqueta_nombre_curso">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="informe_etiqueta_nombre_instructor" layoutX="238.0" layoutY="55.0" text="Etiqueta_nombre_instructor">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="informe_etiqueta_nombre_institución" layoutX="238.0" layoutY="94.0" text="Etiqueta_nombre_institución">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="informe_etiqueta_fecha_inicio" layoutX="578.0" layoutY="20.0" text="Etiqueta_fecha_inicio">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="informe_etiqueta_duración_horas" layoutX="578.0" layoutY="56.0" text="Etiqueta_duración_horas">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="informe_etiqueta_lugar_impartido" layoutX="578.0" layoutY="95.0" text="Etiqueta_lugar_impartido">
-                                       <font>
-                                          <Font name="Tahoma" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="65.0" fitWidth="128.0" layoutX="14.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/Escudo%20ESCAT%20OFICIAL%202.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="92.0" fitWidth="92.0" layoutX="742.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/Escudo%20Cruz%20Verde%20%20Hondureña_Oficial..png" />
-                                       </image>
-                                    </ImageView>
                                  </children>
                               </AnchorPane>
                            </children>

@@ -33,7 +33,7 @@
 				<imageExpression><![CDATA["C:/Users/Hector Baquedano/Documents/NetBeansProjects/ESCAT_CVH/src/img/Escudo Cruz Verde  Hondureña_Oficial..png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="-1" y="10" width="101" height="49" uuid="9df22d17-5ee1-4de6-bab4-a289d3f4a78b"/>
+				<reportElement x="5" y="10" width="101" height="49" uuid="9df22d17-5ee1-4de6-bab4-a289d3f4a78b"/>
 				<imageExpression><![CDATA["C:/Users/Hector Baquedano/Documents/NetBeansProjects/ESCAT_CVH/src/img/Escudo ESCAT OFICIAL 2.png"]]></imageExpression>
 			</image>
 		</band>
@@ -42,7 +42,7 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="53" splitType="Stretch">
+		<band height="57" splitType="Stretch">
 			<staticText>
 				<reportElement style="Column header" x="127" y="10" width="25" height="15" forecolor="#09096E" uuid="62c50457-d05e-48c4-acb7-34cd86790878">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -54,7 +54,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="12"/>
 				</textElement>
 				<text><![CDATA[ID]]></text>
 			</staticText>
@@ -69,18 +69,18 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="6" width="555" height="2" forecolor="#09096E" backcolor="#09096E" uuid="13a76c7c-7ff4-4aaa-bdbf-654a7d137e69">
+				<reportElement x="0" y="6" width="555" height="2" forecolor="#FFFFFF" backcolor="#09096E" uuid="13a76c7c-7ff4-4aaa-bdbf-654a7d137e69">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="27" width="555" height="2" forecolor="#09096E" backcolor="#09096E" uuid="50759483-6a48-4bf4-a623-cc16e8fffe79">
+				<reportElement x="0" y="27" width="555" height="2" forecolor="#FFFFFF" backcolor="#09096E" uuid="50759483-6a48-4bf4-a623-cc16e8fffe79">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -90,7 +90,7 @@
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement style="Detail" x="127" y="-18" width="25" height="15" uuid="a1416bcd-d694-4041-9e68-286855101295">
+				<reportElement style="Detail" x="127" y="-23" width="25" height="15" uuid="a1416bcd-d694-4041-9e68-286855101295">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
@@ -101,12 +101,12 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font size="9"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="152" y="-18" width="300" height="15" uuid="13d4bd71-b1b4-404b-9f23-b967423f02f9"/>
+				<reportElement style="Detail" x="152" y="-23" width="300" height="15" uuid="13d4bd71-b1b4-404b-9f23-b967423f02f9"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -114,7 +114,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font size="9"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
